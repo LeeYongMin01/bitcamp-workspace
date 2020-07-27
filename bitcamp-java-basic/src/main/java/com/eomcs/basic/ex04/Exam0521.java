@@ -30,7 +30,7 @@ public class Exam0521 {
     for (int item : arr1) {
       sum2 = sum2 + item;
     }
-    
+    System.out.println(sum2);
     
   }
 }

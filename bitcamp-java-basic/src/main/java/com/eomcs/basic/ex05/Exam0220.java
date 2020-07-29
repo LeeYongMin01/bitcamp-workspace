@@ -40,5 +40,6 @@ public class Exam0220 {
     System.out.println(Math.abs(-100));
     System.out.println(Math.abs(100));
     
+    
   }
 }

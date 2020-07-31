@@ -1,9 +1,13 @@
 package com.eomcs.pms;
 
 
+
 public class App3 {
 
   public static void main(String[] args) {
+    class task {
+
+    }
     java.util.Scanner keyInput = new java.util.Scanner(System.in);
 
 

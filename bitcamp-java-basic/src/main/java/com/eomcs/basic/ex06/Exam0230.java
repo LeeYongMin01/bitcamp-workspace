@@ -31,7 +31,7 @@ public class Exam0230 {
       default:
     }
 
-    chat c = 'A'; // A문자의 유니코드 값을 c에 저장함
+    char c = 'A'; // A문자의 유니코드 값을 c에 저장함
     switch (c) {
       // case의 값도 int값이면 무엇이든 됨
       case 'A': // 0x41 = 65

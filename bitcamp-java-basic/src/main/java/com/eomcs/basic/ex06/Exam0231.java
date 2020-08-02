@@ -12,7 +12,7 @@ public class Exam0231 {
     switch (x) {
       case 1 * 300: // OK
       // case 1 * y: // 컴파일 오류
-
+    	  
     }
 
 

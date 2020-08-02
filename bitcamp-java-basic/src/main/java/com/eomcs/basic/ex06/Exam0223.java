@@ -8,6 +8,7 @@ public class Exam0223 {
 
     // break문을 쓰지 않으면 계속 이어서 실행됨 => 일부러 쓰지 않는 경우도 있음
 
+   
     switch (score) {
       case 100:
       case 90 :

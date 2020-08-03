@@ -6,202 +6,168 @@ import java.util.Scanner;
 // 1) 명령 프롬프트를 출력한다
 // 2) 명령어를 입력받아 출력한다
 public class App {
+	static Scanner scan = new Scanner(System.in);
+	
+	// 회원
+	static final int LENGTH = 100;
+	static int[] no = new int[LENGTH];
+	static String[] name = new String[LENGTH];
+	static String [] email = new String[LENGTH];
+	static String [] password = new String[LENGTH];
+	static String [] photo = new String[LENGTH];
+	static String [] tel = new String[LENGTH];
+	static Date[] now = new Date[LENGTH];
+	static long currentMillis = 0;
+	static int count = 0;
+	
+	// 프로젝트 정보
+	static final int PLENGTH = 100;
+	static int[] pno = new int[PLENGTH];
+	static String[] ptitle = new String[PLENGTH];
+	static String[] pcontent = new String[PLENGTH];
+	static Date[] pstartDate = new Date[PLENGTH];
+	static Date[] pendDate = new Date[PLENGTH];
+	static String[] powner = new String[PLENGTH];
+	static String[] pmembers = new String[PLENGTH];
+	static int pcount =  0;
+	
+	// 작업 데이터
+	static final int TLENGTH = 100;
+	static int[] tno = new int[TLENGTH];
+	static String[] tcontent = new String[TLENGTH];
+	static Date[] tcompleteDate = new Date[TLENGTH];
+	static String[] tproject = new String[TLENGTH];
+	static int[] tstatus = new int[TLENGTH];
+	static String[] tworker = new String[TLENGTH];
+	
+	static int tcount = 0;
+	
   public static void main(String[] args) {
-    Scanner keyInput = new Scanner(System.in);
 
-    // 회원
-    final int LENGTH = 100;
-    int[] no = new int[LENGTH];
-    String[] name = new String[LENGTH];
-    String [] email = new String[LENGTH];
-    String [] password = new String[LENGTH];
-    String [] photo = new String[LENGTH];
-    String [] tel = new String[LENGTH];
-    Date[] now = new Date[LENGTH];
-    long currentMillis = 0;
-    int count = 0;
-
-    // 프로젝트 정보
-    final int PLENGTH = 100;
-    int[] pno = new int[PLENGTH];
-    String[] ptitle = new String[PLENGTH];
-    String[] pcontent = new String[PLENGTH];
-    Date[] pstartDate = new Date[PLENGTH];
-    Date[] pendDate = new Date[PLENGTH];
-    String[] powner = new String[PLENGTH];
-    String[] pmembers = new String[PLENGTH];
-    int pcount =  0;
-
-    final int TLENGTH = 100;
-    int[] tno = new int[TLENGTH];
-    String[] tcontent = new String[TLENGTH];
-    Date[] tcompleteDate = new Date[TLENGTH];
-    String[] tproject = new String[TLENGTH];
-    int[] tstatus = new int[TLENGTH];
-    String[] tworker = new String[TLENGTH];
-
-    int tcount = 0;
 
 //---------------------------------------------------------------------------------------------
 
     loop:
     while (true) {
-    System.out.print("명령> ");
-    String command = keyInput.nextLine();
+    String command = promptString("명령> ");
 
     switch (command.toLowerCase()) {
       case "/member/add":
-        System.out.println("[회원 등록]");
-
-        System.out.print("번호? ");
-        no[count] = keyInput.nextInt();
-        keyInput.nextLine();
-
-        System.out.print("이름? ");
-        name[count] = keyInput.nextLine();
-
-        System.out.print("이메일? ");
-        email[count] = keyInput.nextLine();
-
-        System.out.print("암호? ");
-        password[count] = keyInput.nextLine();
-
-        System.out.print("사진? ");
-        photo[count] = keyInput.nextLine();
-
-        System.out.print("전화? ");
-        tel[count] = keyInput.nextLine();
-
-        currentMillis = System.currentTimeMillis() ;
-        now[count] = new Date(currentMillis);
-
-        count++;
-        break;
-
+        addMember();
+        break; 
       case "/member/list":
-        System.out.println("[회원 목록]");
-
-        for (int i = 0; i < count; i++) {
-          System.out.printf("%d, %s, %s, %s, %s\n",
-              no[i], name[i], email[i], tel[i], now[i].toString());
-        }
+        listMember();
         break;
-
-//-------------------------------------------------------------------------------------------------
-
       case "/project/add":
-        System.out.println("[프로젝트 등록]");
-
-        System.out.print("번호? ");
-        pno[pcount] = keyInput.nextInt();
-        keyInput.nextLine();
-
-        System.out.print("프로젝트명? " );
-        ptitle[pcount] = keyInput.nextLine();
-
-        System.out.print("내용? ");
-        pcontent[pcount] = keyInput.nextLine();
-
-        System.out.print("시작일? ");
-        pstartDate[pcount] = java.sql.Date.valueOf(keyInput.nextLine());
-
-        System.out.print("종료일? ");
-        pendDate[pcount] = java.sql.Date.valueOf(keyInput.nextLine());
-
-        System.out.print("만든이? ");
-        powner[pcount] = keyInput.nextLine();
-
-        System.out.print("팀원? ");
-        pmembers[pcount] = keyInput.nextLine();
-
-        pcount++;
+        addProject();
         break;
-
       case "/project/list":
-        System.out.println("[프로젝트 목록]");
-
-        for (int i = 0; i < pcount; i++) {
-          System.out.printf("%d, %s, %s, %s, %s\n",
-              pno[i], ptitle[i], pstartDate[i], pendDate[i], powner[i]);
-        }
+        listProject();
         break;
-
-//-----------------------------------------------------------------------------------------
-
       case "/task/add":
-        System.out.println("[작업 등록]");
-        System.out.print("프로젝트? ");
-        tproject[tcount] = keyInput.nextLine();
-
-        System.out.print("번호? ");
-
-        tno[tcount] = Integer.parseInt(keyInput.nextLine());
-
-        System.out.print("내용? ");
-        tcontent[tcount] = keyInput.nextLine();
-
-        System.out.print("완료일? ");
-        tcompleteDate[tcount] = Date.valueOf(keyInput.nextLine());
-
-
-        System.out.println("상태? ");
-        System.out.println("0: 신규");
-        System.out.println("1: 진행중");
-        System.out.println("2: 완료");
-        System.out.print(">");
-        tstatus[tcount] = Integer.valueOf(keyInput.nextLine());
-
-
-        System.out.print("담당자? ");
-        tworker[tcount] = keyInput.nextLine();
-
-        tcount++;
+        addTask();
         break;
-
       case "/task/list":
-        System.out.println("[작업 목록]");
-
-        for (int i = 0; i < tcount; i++) {
-          String stateLabel = null;
-          switch (tstatus[i]) {
-            case 1:
-              stateLabel = "진행중";
-              break;
-            case 2:
-              stateLabel = "완료";
-              break;
-            default:
-              stateLabel = "신규";
-          }
-          // 번호, 작업명, 마감일, 프로젝트, 상태, 담당자
-          System.out.printf("%d, %s, %s, %s, %s\n", // 출력 형식 지정
-              tno[i], tcontent[i], tcompleteDate[i], stateLabel, tworker[i]);
-        }
+       listTask();
         break;
-
-//-----------------------------------------------------------------------------------------------
-
       case "exit":
       case "quit":
         System.out.println("안녕!");
         break loop;
-
       default:
           System.out.println("실행할 수 없는 명령입니다.");
     }
     System.out.println();
 }
 
-    keyInput.close();
+    scan.close();
     System.out.println("종료!");
-
-
-
-
-
-
-
     }
+  
+ static void addMember() {
+	 System.out.println("[회원 등록]");
+	 
+	 no[count] = promptInt("번호? ");
+	 name[count] = promptString("이름? ");
+	 email[count] = promptString("이메일? ");
+	 password[count] = promptString("암호? ");
+	 photo[count] = promptString("사진? ");
+	 tel[count] = promptString("전화? ");
+	 now[count] = new Date(System.currentTimeMillis());
+	 
+	 count++;	
+}
+ static void listMember() {
+	 System.out.println("[회원 목록]");
+     for (int i = 0; i < count; i++) {
+       System.out.printf("%d, %s, %s, %s, %s\n",
+           no[i], name[i], email[i], tel[i], now[i].toString());
+     }
+	 
+ }
+ static void addProject() {
+	 System.out.println("[프로젝트 등록]");
+     pno[pcount] = promptInt("번호? ");
+     ptitle[pcount] = promptString("프로젝트명? " );
+     pcontent[pcount] = promptString("내용? ");
+     pstartDate[pcount] = promptDate("시작일? ");
+     pendDate[pcount] = promptDate("종료일? ");
+     powner[pcount] = promptString("만든이? ");
+     pmembers[pcount] = promptString("팀원? ");
 
-  }
+     pcount++;
+	 
+ }
+ static void listProject() {
+	 System.out.println("[프로젝트 목록]");
+
+     for (int i = 0; i < pcount; i++) {
+       System.out.printf("%d, %s, %s, %s, %s\n",
+           pno[i], ptitle[i], pstartDate[i], pendDate[i], powner[i]);
+     }
+ }
+ static void addTask() {
+	 System.out.println("[작업 등록]");
+     tproject[tcount] = promptString("프로젝트? ");
+     tno[tcount] = promptInt("번호? ");
+     tcontent[tcount] = promptString("내용? ");
+     tcompleteDate[tcount] = promptDate("완료일? ");
+     tstatus[tcount] = promptInt("상태?\n0: 신규\n1: 진행중\n2: 완료\n> ");
+     tworker[tcount] = promptString("담당자? ");
+
+     tcount++;
+ }
+ static void listTask() {
+	 System.out.println("[작업 목록]");
+
+     for (int i = 0; i < tcount; i++) {
+       String stateLabel = null;
+       switch (tstatus[i]) {
+         case 1:
+           stateLabel = "진행중";
+           break;
+         case 2:
+           stateLabel = "완료";
+           break;
+         default:
+           stateLabel = "신규";
+       }
+       // 번호, 작업명, 마감일, 프로젝트, 상태, 담당자
+       System.out.printf("%d, %s, %s, %s, %s\n", // 출력 형식 지정
+           tno[i], tcontent[i], tcompleteDate[i], stateLabel, tworker[i]);
+     }
+ }
+ 
+ static String promptString(String title) {
+	 System.out.print(title);
+	 return scan.nextLine();
+ }
+ 
+ static int promptInt(String title) {
+	 return Integer.parseInt(promptString(title));
+ }
+ static Date promptDate(String title) {
+	 return Date.valueOf(promptString(title));
+ }
+ }
 

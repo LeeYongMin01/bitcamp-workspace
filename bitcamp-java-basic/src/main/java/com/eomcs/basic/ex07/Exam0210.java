@@ -1,129 +1,107 @@
 package com.eomcs.basic.ex07;
 
-public class Exam0210 {
-  public static void main(String[] args) {
-
-    m1();
-    // m1(100);
-    // int r = m1();
 
 
-    m2("홍길동"); //메소드 호출
-                  // "홍길동" = 넘겨주는 값 = argument (아규먼트)
-    // m2();
-    // m2(100);
-    // int r = m2("홍길동");
+  // # 메서드 : 개념 및 기본 문법
+  // 특정 기능을 수행하는 명령어들을 모아 둔 블록
 
-    String message = m3();
-    System.out.println(message);
+  // # 메서드 문법
+  // [리턴값의 타입] 함수명(파라미터선언, ...) {명령어들}
+  // 리턴 값의 타입?
+  // => 함수 블록에 들어있는 명령어를 수행완료한 후,
+  // 그 결과로 놓이는 값의 타입
 
-    message = m3();
-    System.out.println(message);
+  //파라미터 선언?
+  // => 함수 블록을 실행할 때 외부로부터 받은 값을 저장할 변수 선언
 
-    m3();
+  // 1) 명령어 블록을 실행할 때 값을 넘겨주지 않고 결과도 넘겨받지 않는다.
+  // void 메서드명() {
+  // 문장1;
+  // 문장2;
+  //}
 
-    //int result = m3();
-    //message = m3(100);
+//  2) 명령어 블록을 실행할 때 값을 넘겨준다. 그러다 결과는 받지 않는다.
+//  void 메서드명(변수선언1, 변수선언2, ...) {
+//    문장1;
+//    문장2;
+//  }
 
-    message = m4("홍길동");
-    System.out.println(message);
+//3) 명령어 블록을 실행할 때 값을 넘겨주지 않는다. 결과는 받는다.
+//리턴타입 메서드명() {
+//  문장1;
+//  문장2;
+//}
 
-    message = m5("홍길동", 20, false);
-    System.out.println(message);
+  public class Exam0210 {
 
-      m6("홍길동", 100, 90, 80);
-      int[] values = new int[] {100, 90, 80, 70, 60};
-      m7("홍길동", values);
+//  예1) 메서드 : 리턴값(x), 파라미터(x)
+//  함수 블록을 실행할 때 특정 값을 함수에 넘겨 줄 필요가 없고,
+//  함수 블록 실행을 완료한 후 어떤 값도 돌려주지 않음
 
-      System.out.println("-------------------------------------------");
-
-      m8("홍길동", 100, 90);
-      m8("홍길동", 100, 90, 80, 70, 60);
-      m8("홍길동", 100, 90, 80);
-      m8("홍길동");
-    //int aver = m6("홍길동");
-
-      m10(new int[] {100, 90, 80}, new String[] {"국어", "영어", "수학"}, "홍길동");
-
-  }
-
-
-  static void m1() {
-    System.out.println("Hello!");
-  }
-  static void m2(String name) {
-    System.out.println(name + "님 반갑습니다!");
-
-  } // String name = 값을 받는 값 = parameter (파라미터) = 아규먼트 값을 받는 값
-    // 반드시 괄호안에 선언되어야 함
-
-
-  static String m3() {
-    return "안녕!";
-  }
-
-  static String m4(String name) {
-    return name + "님 반갑습니다~";
-  }
-  static String m5(String name, int age, boolean working) {
-    return age + "살 " + name + "님은 현재 재직상태가 " + working + "입니다."; // 파라미터는
-    // 여러개로 값을 받을 수 있지만, return 값은 하나만 가능하다.
-  }
-
-  static void m6(String name, int a, int b, int c) {
-    int sum = a + b + c;
-    int aver = sum / 3;
-    System.out.printf("%s: %d(%d)\n", name, aver);
-  }
-  static void m7(String name, int[] scores) {
-    int sum = 0;
-    for(int i = 0; i < scores.length; i++) {
-      sum += scores[i];
+    static void hello() {
+      System.out.println("안녕");
+      System.out.println("이 메서드는 리턴 없음");
     }
-    int aver = 0;
-    if (scores.length > 0) {
-      aver = sum / scores.length;
-    }
-    System.out.printf("%s: %d(%d)\n", name, sum, aver);
+    public static void main(String[] args) {
+//      ## 메서드를 사용하는 방법
+//      [리턴값을 받을 변수] = 메서드명(아규먼트);
+//      아규먼트?
+//    메서드 블록에 들어있는 명령을 실행하기 위해 넘겨주는 값
+//    => 즉, 파라미터 변수에 넘겨주는 값
+//    => 파라미터 변수의 타입과 개수와 순서에 맞게 값을 줘야함
+//    만약 변수의 타입과 값의 타입이 다르면 오류!
+//    만약 변수의 개수와 값의 개수가 다르면 오류!
+//  변수 선언 순서와 값의 순서가 다르면 오류!
 
-  }
-  static void m8(String name, int... scores) {
-    int sum = 0;
-    for(int i = 0; i < scores.length; i++) {
-      sum += scores[i];
-    }
-    int aver = 0;
-    if (scores.length > 0) {
-      aver = sum / scores.length;
-    }
-    System.out.printf("%s: %d(%d)\n", name, sum, aver);
+//- 리턴값을 받을 변수
+// => 메서드 블록을 실행한 후 리턴되는 값을 받을 변수
+// => 메서드가 값을 리턴한다 하더라도 값을 받기 싫으면
+//  변수를 선언하지 않아도 됨
+// 그러면 리턴되는 값은 버려진다.
+// => 값을 리턴하지 않는 메서드에 대해 변수를 선언하면 오류!
 
+//##메서드 블록의 명령을 실행하기
+//=> 메서드 실행하기
+//=> 메서드 호출하기
+//=>즉, 다음은 "hello"라는 이름을 가진 메서드 블록을 찾아가서 실행하라는 뜻
+
+      hello();
+//## 실행 과정
+//1) hello() 메서드의 블록으로 간다.
+//2) 메서드 바디를 실행한다.
+//3) 다시 원래 위치로 돌아온다.
+//4) 다음 줄을 실행한다.
+
+System.out.println("hello() 실행 완료!");
+
+//hello 메서드는 파라미터 변수가 없기 때문에
+// 호출할 때 값을 넣으면 오류
+// hello(100)
+
+//hello 메서드는 값을 리턴하지 않기 때문에
+//변수로 값을 받으려 하면
+int i;
+//i =hello(); // 오류
+    }
 }
-  // static void m9(int... scores, String name) {
-  // 가변 파라미터는 무조건 맨 끝에 와야한다.
-  // }
 
-  // 가변 파라미터는 여러 개를 선언할 수 없다.
-  // static void m9(int... scores, int... scores2) {
-  //  // m9(100, 90, 80);
-  //  }
+//# 메서드 = 함수 ?
+//  명령어를 기능 단위로 관리하기 쉽게 별도로 분리하여 블록으로 묶어 놓은 것
+//  반복적으로 자주 사용하는 명령어를 재사용하기 쉽도록 별도로 분리하여 묶어 놓은 것
+//  코드를 관리하기 쉽고 재사용하기 쉽도록 기능 단위로 묶어 놓는 문법
+//  #용어
+//  메서드명, 변수선언 : 메서드 시그너처(method signature)
+//  메서드 블록 : 메서드 몸체(method body)
+//  #종류
+//  1)클래스 메서드
+//-클래스에 소속되어 있다.
+//-모든 인스턴스에 대해 사용 가능
+//-static이 붙는다
+//2) 인스턴스 메서드
+//-인스턴스에 대해 사용 가능
+//-static이 붙지 않음
 
-  // 가변 파라미터 중간에 다른 타입의 변수가 오더라도
-  // 가변 파라미터를 한개 초과하여 둘 수 없다.
-  //static void m9(String... titles, String name, int... scores2) {
-    // m9("국어", "수학", "홍길동", 100, 90);
 
- // }
 
-  static void m10(int[] scores, String[] titles, String name) {
-    if(scores.length != titles.length) {
-      System.out.println("과목 수와 점수의 개수가 다릅니다");
-      return;
-    }
 
-    System.out.println(name + "님 점수");
-    for (int i = 0; i < scores.length; i++) {
-      System.out.printf("%s = %d 점\n", titles[i], scores[i]);
-    }
-  }
-}
+

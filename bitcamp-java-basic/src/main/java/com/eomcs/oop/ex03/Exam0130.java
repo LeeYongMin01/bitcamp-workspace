@@ -5,7 +5,7 @@ public class Exam0130 {
 
   // 클래스 변수 = 스태틱 변수
   // 클래스를 로딩하는 순간 자동으로 생성된다.
-  //클래스 이름으로 사용한다고 해서 "클래스에 소속된 변수", "클래스 변수" 라 부른다.
+  // 클래스 이름으로 사용한다고 해서 "클래스에 소속된 변수", "클래스 변수" 라 부른다.
   //- static이 붙은 변수이기 때문에 "스태틱 변수" 라고도 부른다.
   //- 클래스와 함께 "Method Area" 영역에 존재한다.
   //- 문법
@@ -39,6 +39,8 @@ public class Exam0130 {
     A.v2 = true;
 
     System.out.printf("%d, %b\n", A.v1, A.v2);
+
+    //레퍼런스 사용 방법
     System.out.println(obj1.v1);
     System.out.println(obj2.v1);
   }

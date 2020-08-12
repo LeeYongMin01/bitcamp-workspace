@@ -37,6 +37,7 @@ public class Exam0210 {
 
     // 각각의 변수에 대해 일일이 형변환하기 불편하다면?
     // => 그냥 레퍼런스를 형변환하라
+
     Sedan s = (Sedan)v1;
     s.cc = 1980;
     s.valve = 16;

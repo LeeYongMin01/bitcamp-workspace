@@ -14,11 +14,10 @@ public class Exam0122 {
   }
 
   public static void main(String[] args) {
-
     Member m1 = new Member("홍길동", 20);
     Member m2 = new Member("홍길동", 20);
 
-    // 비록 m1과 m2는 같은 값을 갖고 있지만 인스턴스가 다르다.
+    // 비록 m1과 m2는 같은 값을 가지고 있지만 인스턴스가 다르다.
     System.out.println(m1 == m2); // false
 
     // Member는 Object에서 상속 받은 equals()를 오버라이딩 하지 않았다.
@@ -26,5 +25,3 @@ public class Exam0122 {
     System.out.println(m1.equals(m2)); // false
   }
 }
-
-

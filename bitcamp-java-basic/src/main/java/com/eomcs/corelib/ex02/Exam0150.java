@@ -49,6 +49,11 @@ public class Exam0150 {
     // String 클래스는 Object로부터 상속 받은 equals()를 오버라이딩 했다.
     // => 문자열이 같은지를 비교하도록 만들었다.
     System.out.printf("%b\n", s1.equals(s2));
+
+
+
+
+
   }
 }
 

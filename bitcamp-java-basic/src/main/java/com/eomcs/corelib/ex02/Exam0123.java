@@ -14,6 +14,7 @@ public class Exam0123 {
 
     // String의 equals()처럼 내용이 같은지를 비교하도록 만들고 싶다면,
     // Object에서 상속 받은 메서드를 오버라이딩 하라.
+
     @Override
     public boolean equals(Object obj) {
       if (obj == null)
@@ -39,11 +40,17 @@ public class Exam0123 {
     Member m1 = new Member("홍길동", 20);
     Member m2 = new Member("홍길동", 20);
 
+
     // 인스턴스는 다르지만,
     System.out.println(m1 == m2); // false
 
+
     // 인스턴스의 내용물이 같기 때문에 결과는?
     System.out.println(m1.equals(m2)); // true
+
+
+
+
   }
 }
 

@@ -31,7 +31,12 @@ public class ProjectHandler {
     project.content = Prompt.inputString("내용? ");
     project.startDate = Prompt.inputDate("시작일? ");
     project.endDate = Prompt.inputDate("종료일? ");
+
     project.owner = Prompt.inputString("만든이? ");
+    if (MemberHandler.findByName(name) != null) {
+      project.owner = name;
+    }
+
     project.members = Prompt.inputString("팀원? ");
 
     list[size++] = project;

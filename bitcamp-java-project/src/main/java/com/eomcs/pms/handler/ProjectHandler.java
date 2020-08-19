@@ -6,9 +6,6 @@ import com.eomcs.util.Prompt;
 public class ProjectHandler {
 
   static class Project {
-    // Project 클래스에 선언하는 변수는
-    // 기존의 회원 데이터 관련 변수나 작업 데이터 관련 변수와 구분되기 때문에
-    // 변수 이름을 다르게 할 필요가 없다.
     int no;
     String title;
     String content;
@@ -18,11 +15,20 @@ public class ProjectHandler {
     String members;
   }
   static final int LENGTH = 100;
-  static Project[] list = new Project[LENGTH];
-  static int size = 0;
 
+  Project[] list = new Project[LENGTH];
+  int size = 0;
 
-  public static void add() {
+  // 외부에서 직접 이 변수를 사용하지 않기 때문에
+  // public 으로 공개한 것을 취소한다.
+  MemberHandler memberHandler;
+
+  // 인스턴스 변수들을 유효한 값으로 초기화시키는 생성자를 정의한다.
+  public ProjectHandler(MemberHandler memberHandler) {
+    this.memberHandler = memberHandler;
+  }
+
+  public void add() {
     System.out.println("[프로젝트 등록]");
 
     Project project = new Project();
@@ -32,28 +38,52 @@ public class ProjectHandler {
     project.startDate = Prompt.inputDate("시작일? ");
     project.endDate = Prompt.inputDate("종료일? ");
 
-    project.owner = Prompt.inputString("만든이? ");
-    if (MemberHandler.findByName(name) != null) {
-      project.owner = name;
+    while (true) {
+      String name = Prompt.inputString("만든이?(취소: 빈 문자열) ");
+
+      if (name.length() == 0) {
+        System.out.println("프로젝트 등록을 취소합니다.");
+        return;
+      } else if (memberHandler.findByName(name) != null) {
+        project.owner = name;
+        break;
+      }
+
+      System.out.println("등록된 회원이 아닙니다.");
     }
 
-    project.members = Prompt.inputString("팀원? ");
+    StringBuilder members = new StringBuilder();
+    while (true) {
+      String name = Prompt.inputString("팀원?(완료: 빈 문자열) ");
 
-    list[size++] = project;
+      if (name.length() == 0) {
+        break;
+      } else if (memberHandler.findByName(name) != null) {
+        if (members.length() > 0) {
+          members.append(",");
+        }
+        members.append(name);
+      } else {
+        System.out.println("등록된 회원이 아닙니다.");
+      }
+    }
+    project.members = members.toString();
+
+    this.list[this.size++] = project;
   }
 
-  public static void list() {
+  public void list() {
     System.out.println("[프로젝트 목록]");
 
-    for (int i = 0; i < size; i++) {
-      Project project = list[i];
-      System.out.printf("%d, %s, %s, %s, %s\n",
+    for (int i = 0; i < this.size; i++) {
+      Project project = this.list[i];
+      System.out.printf("%d, %s, %s, %s, %s, [%s]\n",
           project.no,
           project.title,
           project.startDate,
           project.endDate,
-          project.owner);
+          project.owner,
+          project.members);
     }
   }
-
 }

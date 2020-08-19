@@ -89,7 +89,7 @@ public class Exam0210_class {
 
     System.out.println(cal.get(Calendar.YEAR)); // year
     System.out.println(cal.get(Calendar.MONTH) + 1); // month
-    System.out.println(cal.get(Calendar.DATE); // date
+    System.out.println(cal.get(Calendar.DATE)); // date
     System.out.println(cal.get(Calendar.DAY_OF_WEEK)); // 요일 (1~7)
     System.out.println(cal.get(Calendar.WEEK_OF_MONTH)); // 해당 월의 몇번째 주
     System.out.println(cal.get(Calendar.HOUR)); // 12 hour
@@ -99,7 +99,7 @@ public class Exam0210_class {
 
     // int -> INteger, byte -> Byte, short -> Short, long -> Long
     // float - > float, double ->< Double, char -> Character
-        Integer i1 = new integer(100);
+        Integer i1 = new Integer(100);
         Integer i2 = new Integer(200);
 
     System.out.println(i1.toString());

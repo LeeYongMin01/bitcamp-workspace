@@ -39,7 +39,7 @@ public class MyApp3 {
 	System.out.printf("번호: %s\n" , no);
 	System.out.printf("내용: %s\n", content);
 	System.out.printf("마감일: %s\n", deadline);
-
+	
 	switch(status) {
 	  case 1 :
 	    System.out.println("상태: 진행중");

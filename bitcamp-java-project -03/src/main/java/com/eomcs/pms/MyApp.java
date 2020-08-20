@@ -39,6 +39,6 @@ public class MyApp {
 	System.out.printf("암호: %s\n", password);
 	System.out.printf("사진: %s\n", photo);
 	System.out.printf("전화: %s\n", tel);
-	System.out.printf("가입일 : %s\n", now);
+	System.out.printf("가입일 : %s\n", now); 
 	}
 }

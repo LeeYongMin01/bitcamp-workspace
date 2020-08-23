@@ -8,22 +8,22 @@ public class MyApp {
 		System.out.println("[회원]");
 	Scanner scanner = new Scanner(System.in);
 	
-	System.out.println("번호? ");
+	System.out.print("번호? ");
 	String no = scanner.nextLine();
 	
-	System.out.println("이름? ");
+	System.out.print("이름? ");
 	String name = scanner.nextLine();
 	
-	System.out.println("이메일? ");
+	System.out.print("이메일? ");
 	String email = scanner.nextLine();
 	
-	System.out.println("암호? ");
+	System.out.print("암호? ");
 	String password = scanner.nextLine();
 	
-	System.out.println("사진? ");
+	System.out.print("사진? ");
 	String photo = scanner.nextLine();
 	
-	System.out.println("전화? ");
+	System.out.print("전화? ");
 	String tel = scanner.nextLine();
 	
 	// 현재 일시 

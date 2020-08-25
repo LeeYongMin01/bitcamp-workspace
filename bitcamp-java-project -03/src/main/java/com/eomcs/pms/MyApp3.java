@@ -47,7 +47,7 @@ public class MyApp3 {
 	  case 2 :
 	    System.out.println("상태: 완료");
 	    break;
-	  case 3:
+	  default:
 	    System.out.println("상태: 신규");
 	}
 	System.out.printf("담당자: %s\n", owner);

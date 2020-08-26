@@ -3,7 +3,7 @@ package com.eomcs.pms;
 import java.sql.Date;
 import java.util.Scanner;
 
-public class App {
+public class App_i {
 
   public static void main(String[] args) {
 	  
@@ -133,32 +133,14 @@ public class App {
     		System.out.println("0: 신규");
     		System.out.println("1: 진행중");
     		System.out.println("2: 완료");
-    		System.out.print("> ");
+    		System.out.println("> ");
     		tstatus[tsize] = Integer.valueOf(scanner.nextLine());
     		
-    		System.out.print("담당자? ");
+    		System.out.println("담당자? ");
     		towner[tsize] = scanner.nextLine();
     		
     		tsize++;
     		break;
-    	case "/task/list":
-    		System.out.println("[작업 목록]");
-    		  for (int i = 0; i < tsize; i++) {
-    			  String stateLabel = null;
-    			  switch (tstatus[i]) {
-    			  case 1:
-    				  stateLabel = "진행중";
-    				  break;
-    			  case 2:
-    				  stateLabel = "완료";
-    			  default:
-    				  stateLabel = "신규";
-    			  }
-    		 System.out.printf("%d, %s, %s, %s, %s\n", // 출력 형식 지정
-    		          tno[i], tcontent[i], tdeadline[i], stateLabel, towner[i]);
-    		 }
-    		  break;
-    		  
     	case "exit":
     	case "quit":
     		System.out.println("안녕!");

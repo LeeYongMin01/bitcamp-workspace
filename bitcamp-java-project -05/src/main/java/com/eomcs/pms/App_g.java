@@ -3,15 +3,15 @@ package com.eomcs.pms;
 import java.sql.Date;
 import java.util.Scanner;
 
-public class App {
+public class App_g {
 
   public static void main(String[] args) {
 	  
 	  Scanner scanner = new Scanner(System.in);
+	  final int LENGTH = 100;
 	  
 	  
 	  // 회원 데이터
-	  final int LENGTH = 100;
 	  int[] no = new int[LENGTH];
 	  String[] name = new String[LENGTH];
 	  String[] email = new String[LENGTH];
@@ -33,16 +33,6 @@ public class App {
 	  String[] pmembers = new String[PLENGTH];
 	  
 	  int psize = 0;
-	  
-	  // 작업 데이터
-	  final int TLENGTH = 100;
-	  int[] tno = new int[TLENGTH];
-	  String[] tcontent = new String[TLENGTH];
-	  Date[] tdeadline = new Date[TLENGTH];
-	  String[] towner = new String[TLENGTH];
-	  int[] tstatus = new int[TLENGTH];
-	  
-	  int tsize = 0;
 	  
 	 loop:
 	  while(true) {
@@ -109,56 +99,7 @@ public class App {
     		
     		psize++;
     		break;
-    	case "/project/list":
-    		System.out.println("[프로젝트 등록]");
-    		  for (int i = 0; i < psize; i++) {
-    		 System.out.printf("%d, %s, %s, %s, %s\n", // 출력 형식 지정
-    				 pno[i], ptitle[i], pstartDate[i], pendDate[i], powner[i]);
-    		 }
-    		  break;
-    	
-    	case "/task/add":
-    		System.out.println("[작업 등록]");
-    		
-    		System.out.print("번호? ");
-    		tno[tsize] = Integer.parseInt(scanner.nextLine());
-    		
-    		System.out.print("내용? ");
-    		tcontent[tsize] = scanner.nextLine();
-    		
-    		System.out.print("마감일? ");
-    		tdeadline[tsize] = Date.valueOf(scanner.nextLine());
-
-    		System.out.println("상태? ");
-    		System.out.println("0: 신규");
-    		System.out.println("1: 진행중");
-    		System.out.println("2: 완료");
-    		System.out.print("> ");
-    		tstatus[tsize] = Integer.valueOf(scanner.nextLine());
-    		
-    		System.out.print("담당자? ");
-    		towner[tsize] = scanner.nextLine();
-    		
-    		tsize++;
-    		break;
-    	case "/task/list":
-    		System.out.println("[작업 목록]");
-    		  for (int i = 0; i < tsize; i++) {
-    			  String stateLabel = null;
-    			  switch (tstatus[i]) {
-    			  case 1:
-    				  stateLabel = "진행중";
-    				  break;
-    			  case 2:
-    				  stateLabel = "완료";
-    			  default:
-    				  stateLabel = "신규";
-    			  }
-    		 System.out.printf("%d, %s, %s, %s, %s\n", // 출력 형식 지정
-    		          tno[i], tcontent[i], tdeadline[i], stateLabel, towner[i]);
-    		 }
-    		  break;
-    		  
+    				
     	case "exit":
     	case "quit":
     		System.out.println("안녕!");

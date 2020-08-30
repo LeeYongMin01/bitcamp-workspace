@@ -1,6 +1,6 @@
 package com.eomcs.oop.ex02;
 
-import com.eomcs.oop.ex02.Exam0260.Calculator;
+import com.eomcs.oop.ex02.util.Calculator;
 
 //# 관련된 기능(메서드)을 묶어 분류하기 - 패키지 멤버 클래스
 

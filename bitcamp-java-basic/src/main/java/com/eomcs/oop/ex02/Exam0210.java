@@ -5,13 +5,14 @@ package com.eomcs.oop.ex02;
 public class Exam0210 {
 
   public static void main(String[] args) {
-    // 다음 식을 연산자 우선 순위 고려ㄴㄴ하고 순서대로 계산
+    // 다음 식을 연산자 우선 순위 고려하지않고 순서대로 계산
     // 2 + 3 - 1 * 7 / 3 = ?
 
     // 계산 담을 결과 변수 준비
     int result = 0;
 
-    // 메서드를 호출하고 리턴 결과는 로컬 변수에 저장
+    // 메서드를 호출하여 작업을 수행하고,
+    // 리턴 결과는 로컬 변수에 저장한다.
 
     result = plus(2, 3);
     result = minus(result, 1);

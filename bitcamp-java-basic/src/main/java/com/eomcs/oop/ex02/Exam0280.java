@@ -10,7 +10,12 @@ public class Exam0280 {
   // - import 를 이용하여 클래스의 패키지 정보를 지정한다.
 
   public static void main(String[] args) {
-
+	  
+	  // 다음 두 개의 식을 분리하여 계산해 보자!
+	    // - 연산자 우선 순위를 고려하지 않고 순서대로 계산하라!
+	    // 식1) 2 + 3 - 1 * 7 / 3 = ?
+	    // 식2) 3 * 2 + 7 / 4 - 5 = ?
+	  
     Calculator c1 = new Calculator();
     Calculator c2 = new Calculator();
 

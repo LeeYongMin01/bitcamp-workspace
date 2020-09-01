@@ -1,9 +1,9 @@
+// 다형성 - 다형적 변수(polymorphic variables)
 package com.eomcs.oop.ex06.a;
 
 public class Exam0116 {
 
   public static void main(String[] args) {
-
 
     // 상위 클래스의 레퍼런스로 하위 클래스의 인스턴스를 가리킬 때
     Car c = new Car();

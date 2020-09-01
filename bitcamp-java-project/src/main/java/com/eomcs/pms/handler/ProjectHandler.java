@@ -1,29 +1,13 @@
 package com.eomcs.pms.handler;
 
-import java.sql.Date;
+import com.eomcs.pms.domain.Project;
 import com.eomcs.util.Prompt;
 
 public class ProjectHandler {
 
-  static class Project {
-    int no;
-    String title;
-    String content;
-    Date startDate;
-    Date endDate;
-    String owner;
-    String members;
-  }
-  static final int LENGTH = 100;
-
-  Project[] list = new Project[LENGTH];
-  int size = 0;
-
-  // 외부에서 직접 이 변수를 사용하지 않기 때문에
-  // public 으로 공개한 것을 취소한다.
+  ProjectList projectList = new ProjectList();
   MemberHandler memberHandler;
 
-  // 인스턴스 변수들을 유효한 값으로 초기화시키는 생성자를 정의한다.
   public ProjectHandler(MemberHandler memberHandler) {
     this.memberHandler = memberHandler;
   }
@@ -69,14 +53,13 @@ public class ProjectHandler {
     }
     project.members = members.toString();
 
-    this.list[this.size++] = project;
+    projectList.add(project);
   }
 
   public void list() {
     System.out.println("[프로젝트 목록]");
-
-    for (int i = 0; i < this.size; i++) {
-      Project project = this.list[i];
+    Project[] projects = projectList.toArray();
+    for (Project project : projects) {
       System.out.printf("%d, %s, %s, %s, %s, [%s]\n",
           project.no,
           project.title,

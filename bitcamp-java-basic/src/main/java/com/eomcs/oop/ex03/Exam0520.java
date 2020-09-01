@@ -15,10 +15,9 @@ public class Exam0520 {
     boolean bool2;
     String str2;
     Date date2;
-  }
-
+}
+  
   public static void main(String[] args) {
-
     // 인스턴스 변수도 클래스 변수와 마찬가지이다.
     // 힙(heap)에 생성되는 인스턴스 필드(변수)는 자동으로 초기화된다.
     // 그래서 인스턴스 필드(변수)는 생성되는 즉시 0으로 초기화 된다.
@@ -31,6 +30,4 @@ public class Exam0520 {
     System.out.printf("%d, %d, %d, %d, %c, %.1f, %.1f, %b, %s, %s\n", obj.b2, obj.s2, obj.i2,
         obj.l2, obj.c2, obj.f2, obj.d2, obj.bool2, obj.str2, obj.date2);
   }
-}
-
-
+  }

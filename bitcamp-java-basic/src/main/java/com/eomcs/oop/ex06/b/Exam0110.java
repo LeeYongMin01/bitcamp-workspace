@@ -1,8 +1,6 @@
 // 메서드 오버로딩(overloading) - 문법 사용 전
 package com.eomcs.oop.ex06.b;
 
-import com.eomcs.oop.ex06.b.Exam0110.Calculator;
-
 public class Exam0110 {
 
   static class Calculator {

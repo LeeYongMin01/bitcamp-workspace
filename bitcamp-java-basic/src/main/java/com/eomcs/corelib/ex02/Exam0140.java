@@ -14,7 +14,7 @@ public class Exam0140 {
     System.out.println(s1 == s2); // true
 
     System.out.println(s1);
-
+    System.out.println(s2);
 
   }
 }

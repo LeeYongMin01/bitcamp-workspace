@@ -11,9 +11,6 @@ public class Exam0112 {
 
   System.out.println(s1 instanceof String);
   System.out.println(s2 instanceof String);
-
-
   }
 }
-
 

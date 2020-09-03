@@ -23,8 +23,8 @@ public class Exam0110 {
 
     System.out.println(list.size());
 
-    System.out.println(list.remove(1)); // aaa, ccc,
-    print(list);
+    System.out.println(list.remove(1)); // bbb
+    print(list); // aaa, ccc,
 
     list.add(s4); // aaa, ccc, ddd
     list.add(1, s5); // aaa, eee, ccc, ddd

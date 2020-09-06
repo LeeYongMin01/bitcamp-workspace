@@ -3,7 +3,7 @@ package com.eomcs.pms;
 import java.sql.Date;
 import java.util.Scanner;
 
-public class App {
+public class App_b {
   
   static Scanner scanner = new Scanner(System.in);
 
@@ -36,18 +36,14 @@ public class App {
   static final int PLENGTH = 100;
   static Project[] projects = new Project[PLENGTH];
   static int psize = 0;
-
-  // 작업 데이터
-  static class Task {
-    int no;
-    String content;
-    Date deadline;
-    String owner;
-    int status;
-  }
   
+  // 작업 데이터
   static final int TLENGTH = 100;
-  static Task[] tasks = new Task[TLENGTH];
+  static int[] tno = new int[TLENGTH];
+  static String[] tcontent = new String[TLENGTH];
+  static Date[] tdeadline = new Date[TLENGTH];
+  static String[] towner = new String[TLENGTH];
+  static int[] tstatus = new int[TLENGTH];
   static int tsize = 0;
   
   public static void main(String[] args) {
@@ -148,34 +144,30 @@ public class App {
     static void addTask() {
       System.out.println("[작업 등록]");
       
-      Task task = new Task();
-      task.no = promptInt("번호? ");
-      task.content = promptString("내용? ");
-      task.deadline = promptDate("마감일? ");
-      task.status = promptInt("상태?\n0: 신규\n1: 진행중\n2: 완료\n> ");
-      task.owner = promptString("담당자? ");
+      tno[tsize] = promptInt("번호? ");
+      tcontent[tsize] = promptString("내용? ");
+      tdeadline[tsize] = promptDate("마감일? ");
+      tstatus[tsize] = promptInt("상태?\n0: 신규\n1: 진행중\n2:완료\n> ");
+      towner[tsize] = promptString("담당자? ");
       
-      tasks[tsize++] = task;
+      tsize++;
     }
     
     static void listTask() {
       System.out.println("[작업 목록]");
-      
       for (int i = 0; i < tsize; i++) {
-          Task task = tasks[i];
           String stateLabel = null;
-          switch (task.status) {
+          switch (tstatus[i]) {
           case 1:
               stateLabel = "진행중";
               break;
           case 2:
               stateLabel = "완료";
-              break;
           default:
               stateLabel = "신규";
           }
-     System.out.printf("%d, %s, %s, %s, %s\n", 
-              task.no, task.content, task.deadline, stateLabel, task.owner);
+     System.out.printf("%d, %s, %s, %s, %s\n", // 출력 형식 지정
+              tno[i], tcontent[i], tdeadline[i], stateLabel, towner[i]);
      }
     }
     

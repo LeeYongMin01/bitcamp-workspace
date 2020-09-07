@@ -1,7 +1,5 @@
 package com.eomcs.oop.ex03;
 
-import com.eomcs.oop.ex03.Exam0130.A;
-
 public class Exam0130 {
   
   // 지금 당장 A 클래스 앞에 붙은 static은 고민하지 말라!

@@ -1,10 +1,10 @@
 package com.eomcs.pms.handler;
 
 import java.util.Date;
-import com.eomcs.pms.domain.Board;
+import com.eomcs.pms.handler.BoardList.Board;
 import com.eomcs.util.Prompt;
 
-public class BoardHandler {
+public class BoardHandler01 {
 
   // BoardHandler가 사용할 BoardList 객체를 준비한다.
   BoardList boardList = new BoardList();
@@ -12,7 +12,7 @@ public class BoardHandler {
   public void add() {
     System.out.println("[게시글 등록]");
     
-    Board board = new Board();
+    BoardList.Board board = new BoardList.Board();
     board.no = Prompt.inputInt("번호? ");
     board.title = Prompt.inputString("제목? ");
     board.content= Prompt.inputString("내용? ");
@@ -28,7 +28,7 @@ public class BoardHandler {
   public void list() {
     System.out.println("[게시글 목록]");
     
-    Board[] boards = boardList.toArray();
+    BoardList.Board[] boards = boardList.toArray();
     
     for(Board board : boards) {
       System.out.printf("%d, %s, %s, %s, %d\n",

@@ -1,29 +1,13 @@
 package com.eomcs.pms.handler;
 
-import java.sql.Date;
+import com.eomcs.pms.domain.Task;
 import com.eomcs.util.Prompt;
 
 public class TaskHandler {
   
-  // 작업 데이터
-  static class Task {
-    int no;
-    String content;
-    Date deadline;
-    String owner;
-    int status;
-  }
-  
-  static final int LENGTH = 100;
-  Task[] list = new Task[LENGTH];
-  int size = 0;
-  
-  // 외부에서 직접 이 변수를 사용하지 않기 때문에
-  // public 으로 공개한 것을 취소한다.
+  TaskList taskList = new TaskList();
   MemberHandler memberHandler;
   
-  // TaskHandler의 인스턴스를 생성하려는 개발자에게
-  // TaskHandler가 사용할 의존 객체(MemberHandler)를 반드시 주입하도록 강제한다.
   public TaskHandler(MemberHandler memberHandler) {
     this.memberHandler = memberHandler;
   }
@@ -50,15 +34,15 @@ public class TaskHandler {
       System.out.println("등록된 회원이 아닙니다.");
       
     }
-    
-    this.list[this.size++] = task;
+    taskList.add(task);
+
   }
   
   public void list() {
     System.out.println("[작업 목록]");
     
-    for (int i = 0; i < this.size; i++) {
-        Task task = this.list[i];
+    Task[] tasks = taskList.toArray();
+    for (Task task : tasks) {
         String stateLabel = null;
         switch (task.status) {
         case 1:

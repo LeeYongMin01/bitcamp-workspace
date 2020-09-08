@@ -1,4 +1,4 @@
-package com.eomcs.pms.handler;
+/*package com.eomcs.pms.handler;
 
 import java.util.Date;
 import com.eomcs.pms.handler.BoardList.Board;
@@ -12,13 +12,13 @@ public class BoardHandler01 {
   public void add() {
     System.out.println("[게시글 등록]");
     
-    BoardList.Board board = new BoardList.Board();
-    board.no = Prompt.inputInt("번호? ");
-    board.title = Prompt.inputString("제목? ");
-    board.content= Prompt.inputString("내용? ");
-    board.writer = Prompt.inputString("작성자? ");
-    board.registeredDate = new Date(System.currentTimeMillis());
-    board.viewCount = 0;
+//    BoardList.Board board = new BoardList.Board();
+//    board.no = Prompt.inputInt("번호? ");
+//    board.title = Prompt.inputString("제목? ");
+//    board.content= Prompt.inputString("내용? ");
+//    board.writer = Prompt.inputString("작성자? ");
+//    board.registeredDate = new Date(System.currentTimeMillis());
+//    board.viewCount = 0;
     
     boardList.add(board);
     
@@ -37,4 +37,4 @@ public class BoardHandler01 {
   }
  }
 }
-
+*/

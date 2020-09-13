@@ -28,7 +28,7 @@ public class Exam0113 {
     }
     
     public T get() {
-      return value;
+      return value; 
     }
   }
   
@@ -44,7 +44,7 @@ public class Exam0113 {
     // 객체를 생성할 때 타입 지정을 생략할 수 있다.
     box1 = new Box<>();
     
-    // <> 빼면 경고가 뜨며, 내부적으로는 Object를 타입으로 지정한 것으로 다룬다.
+    // <>를 빼면 경고가 뜨며, 내부적으로는 Object를 타입으로 지정한 것으로 다룬다.
     // 즉 다음 코드는 box1 = new Box<Object>() 와 같다.
     // box1 = new Box(); // 경고!
     

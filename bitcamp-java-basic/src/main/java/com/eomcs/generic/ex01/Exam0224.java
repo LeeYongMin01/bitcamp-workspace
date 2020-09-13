@@ -35,7 +35,7 @@ public class Exam0224 {
     // 파라미터로 받은 ArrayList가 구체적으로 어떤 타입의 값을 다루는 것인지 
     // 결정되지 않았기 때문에 컴파일러는 다음 코드가 옳은지 검사할 수 없다.
     // 그래서 컴파일 오류가 발생한다.
-    //list.add(new B1()); // 컴파일 오류!
+    // list.add(new B1()); // 컴파일 오류!
     
     Object obj1 = list.get(0);
     B1 obj2 = list.get(0);

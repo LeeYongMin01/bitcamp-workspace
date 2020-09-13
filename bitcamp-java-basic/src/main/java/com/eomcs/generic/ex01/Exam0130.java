@@ -1,8 +1,6 @@
 // 제네릭(Generic) - 여러 개의 타입 파라미터
 package com.eomcs.generic.ex01;
 
-import com.eomcs.generic.ex01.Exam0130.A;
-
 public class Exam0130 {
 
     static class A<X,Y,Z> {

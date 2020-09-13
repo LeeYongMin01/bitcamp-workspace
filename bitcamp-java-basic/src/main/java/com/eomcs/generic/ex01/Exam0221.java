@@ -33,6 +33,7 @@ public class Exam0221 {
     //m1(new ArrayList<B2>()); // 컴파일 오류!
     //m1(new ArrayList<C>());  // 컴파일 오류!
   }
+  
   static void m1(ArrayList<Object> list) {
     list.add(new Object());
     list.add(new A());

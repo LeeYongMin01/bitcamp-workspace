@@ -21,14 +21,7 @@ import java.lang.reflect.Array;
 
 // 테스트3: MyLinkedListTest3
 // 12) 파라미터로 받은 배열에 값을 채워주는 toArray(E[]) 메서드를 추가한다.
-
-// 테스트4: MyLinkedListTest4
-// 13) Object.clone()을 오버라이딩: shallow copy
-
-// 테스트5: MyLinkedListTest5
-// 14) Object.clone()을 오버라이딩: deep copy
-
-public class MyLinkedList<E> implements Cloneable {
+public class MyLinkedList12<E> {
 
   // 값을 찾을 때는 첫 번째 노드부터 따라간다.
   private Node<E> first;
@@ -141,7 +134,7 @@ public class MyLinkedList<E> implements Cloneable {
     return old.value;
   }
   
-  public E set(int index, E element) {
+  public Object set(int index, E element) {
     if (index < 0 || index >= this.size) {
       throw new IndexOutOfBoundsException("인덱스가 유효하지 않습니다.");
     }
@@ -177,10 +170,20 @@ public class MyLinkedList<E> implements Cloneable {
   
   @SuppressWarnings("unchecked")
   public E[] toArray(E[] arr) {
-    
     if(arr.length < size) {
-      arr = (E[]) Array.newInstance(arr.getClass().getComponentType(), size);
-    } 
+      // => 다음과 같이 배열의 타입을 엄격히 형변환 해도 된다.
+      //Class<E[]> arrayClassInfo = (Class<E[]>)arr.getClass();
+      //Class<E> arrayItemClassInfo = (Class<E>)arrayClassInfo.getComponentType();
+      
+      // => 그러나 조회 용으로 사용할 거라면 굳이 리턴 값에 대해 제네릭 형변환을 엄격히 할 필요가 없다.
+      Class<?> arrayClassInfo = arr.getClass();
+      Class<?> arrayItemClassInfo = arrayClassInfo.getComponentType();
+      
+      arr = (E[]) Array.newInstance(arrayItemClassInfo, this.size());
+      
+      // => 그냥 다음과 같이 간략하게 표현하는 것이 코드를 읽기 쉽게 한다.
+      //arr = (E[]) Array.newInstance(arr.getClass().getComponentType(), this.size());
+    }
     
     Node<E> cursor = first;
     for (int i = 0; i < size; i++) {
@@ -189,21 +192,5 @@ public class MyLinkedList<E> implements Cloneable {
     }
     
     return arr;
-  }
-  
-  // Object.clone()을 오버라이딩 할 때 'deep copy' 이용하여 스택 객체 복사하기
-  // => 새 연결 리스트를 만들어 원본에 보관된 값을 복사한다.
-  // => 따라서 복사본의 Node 객체는 원본의 Node 객체와 다르다. 
-  //    복사본의 상태 변경에 원본은 영향 받지 않는다.
-  //
-  @SuppressWarnings("unchecked")
-  @Override
-  public MyLinkedList<E> clone() throws CloneNotSupportedException {
-    MyLinkedList<E> newList = new MyLinkedList<>();
-    Object[] values = this.toArray();
-    for (Object value : values) {
-      newList.add((E) value);
-    }
-    return newList;
   }
 }

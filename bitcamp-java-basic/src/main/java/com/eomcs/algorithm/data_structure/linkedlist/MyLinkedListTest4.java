@@ -1,6 +1,6 @@
 package com.eomcs.algorithm.data_structure.linkedlist;
 
-public class MyLinkedListTest {
+public class MyLinkedListTest4 {
   public static void main(String[] args) throws Exception {
     MyLinkedList<String> list = new MyLinkedList<>();
 
@@ -18,7 +18,7 @@ public class MyLinkedListTest {
     System.out.println("---------------------");
 
     // 원본 연결 리스트의 값을 출력하면?
-    print(list); // aaa, bbb, ccc, ddd, OK!
+    //print(list); // aaa, bbb, ccc, ddd, 를 기대하지만, 실행 오류 발생!
     System.out.println("---------------------");
 
   }

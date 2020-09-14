@@ -24,7 +24,7 @@ public class Exam0120 {
 
     list.add(1, "xxx"); // bbb, xxx, ddd,
     list.add(1, "yyy"); // bbb, yyy, xxx, ddd // xxx가 뒤로 밀림
-    list.add(0, "zzz"); // zzz, bbb, yyy, xxx, ddd // zzz가 뒤로 밀림
+    list.add(0, "zzz"); // zzz, bbb, yyy, xxx, ddd // bbb가 뒤로 밀림
     print(list);
 
     // 삽입할 인덱스가 배열의 크기를 가리킬 경우, 맨 끝에 추가한다.

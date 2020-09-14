@@ -1,6 +1,6 @@
 package com.eomcs.algorithm.data_structure.array;
 
-public class MyArrayListTest {
+public class MyArrayListTest07 {
 
   public static void main(String[] args) {
 

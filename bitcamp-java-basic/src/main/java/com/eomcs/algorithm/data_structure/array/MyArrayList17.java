@@ -1,7 +1,5 @@
 package com.eomcs.algorithm.data_structure.array;
 
-import java.util.Arrays;
-
 // 테스트1 - MyArrayListTest
 // 1) 인스턴스/객체 (의 주소)를 담을 레퍼런스 배열을 준비한다.
 // 2) 인스턴스를 추가하는 add(Object) 메서드를 정의한다.
@@ -30,31 +28,18 @@ import java.util.Arrays;
 // 15) ArrayList 인스턴스를 생성할 때 초기 크기를 지정하지 않고 생성할 수 있도록 기본 생성자를 추가한다.
 // 16) 배열 크기를 지정할 때 기본 크기 보다 큰 값이 되도록 생성자를 변경한다.
 // 17) 배열의 기본 크기를 직접 숫자로 지정하지 말고 상수를 사용하여 지정한다.
-// 18) 배열의 크기를 늘릴 때 자바에서 제공하는 Arrays를 사용하여 처리한다.
-// 19) 배열의 특정 항목을 삭제할 때 배열 복사 기능을 이용하여 처리한다.
-// 20) ArrayList에 보관되어 있는 인스턴스 목록을 배열로 리턴하는 toArray() 메서드를 추가한다.
-// 21) toArray()에서 배열을 복사할 때 Arrays.copyOf() 메서드를 활용해보자.
 
-// 테스트4 - MyArrayListTest4 : java.util.ArrayList 비교 테스트
-
-// 테스트5 - MyArrayListTest5
-// 22) 제네릭을 적용한다.
-// 23) 파라미터로 받은 배열에 값을 채워주는 toArray(E[]) 메서드를 추가한다.
-
-// 테스트5 - MyArrayListTest5
-// 24) 항목의 개수보다 작은 크기의 배열을 전달할 때, 자동으로 새 배열을 만들도록 toArray(E[])를 변경한다.
-
-public class MyArrayList<E> {
+public class MyArrayList17 {
   
   private static final int DEFAULT_CAPACITY = 5;
   private Object[] elementData;
   private int size;
   
-  public MyArrayList() {
-    elementData = new Object[DEFAULT_CAPACITY];
+  public MyArrayList17() {
+    elementData = new Object[5];
   }
   
-  public MyArrayList(int initialCapacity) {
+  public MyArrayList17(int initialCapacity) {
     if(initialCapacity < DEFAULT_CAPACITY) {
       elementData = new Object[DEFAULT_CAPACITY];
     } else {
@@ -62,7 +47,7 @@ public class MyArrayList<E> {
     }
   }
   
-  public boolean add(E e) {
+  public boolean add(Object e) {
     if(size == elementData.length) {
       grow();
     }
@@ -72,16 +57,14 @@ public class MyArrayList<E> {
   
   private void grow() {
     System.out.println("배열을 늘리자.");
-    int newCapacity = elementData.length + (elementData.length >> 1);
-    elementData = Arrays.copyOf(elementData, newCapacity);
-//    Object[] newArray = new Object[elementData.length + (elementData.length >> 1)];
-//    for(int i = 0; i < elementData.length; i++) {
-//      newArray[i] = elementData[i];
-//    }
-//    elementData = newArray;
+    Object[] newArray = new Object[elementData.length + (elementData.length >> 1)];
+    for(int i = 0; i < elementData.length; i++) {
+      newArray[i] = elementData[i];
+    }
+    elementData = newArray;
   }
   
-  public void add(int index, E element) {
+  public void add(int index, Object element) {
     if(size == elementData.length) {
       grow();
     }
@@ -95,70 +78,40 @@ public class MyArrayList<E> {
     size++;
   }
   
-  @SuppressWarnings("unchecked")
-  public E get(int index) {
+  public Object get(int index) {
     if(index < 0 || index >= size) {
       throw new ArrayIndexOutOfBoundsException("인덱스가 유효하지 않습니다.");
     }
-    return (E) elementData[index];
+    return elementData[index];
   }
   
-  @SuppressWarnings("unchecked")
-  public E set(int index, E element) {
+  public Object set(int index, Object element) {
     if(index < 0 || index >= size) {
       throw new ArrayIndexOutOfBoundsException("인덱스가 유효하지 않습니다.");
     }
     Object old = elementData[index];
     elementData[index] = element;
-    return (E) old;
+    return old;
   }
   
-  @SuppressWarnings("unchecked")
-  public E remove(int index) {
+  public Object remove(int index) {
+    if(index < 0 || index >= size) {
+      throw new ArrayIndexOutOfBoundsException("인덱스가 유효하지 않습니다.");
+    }
+    
     Object old = elementData[index];
     
-    System.arraycopy(
-        elementData, // 복사 대상
-        index + 1, // 복사할 항목의 시작 인덱스
-        elementData, // 목적지
-        index, // 복사 목적지 인덱스 
-        this.size - (index + 1) // 복사할 항목의 개수
-        );
-//    for(int i = index; i < size - 1; i++) {
-//      elementData[i] = elementData[i + 1];
-//    }
+    for(int i = index; i < size - 1; i++) {
+      elementData[i] = elementData[i + 1];
+    }
     
     size--;
     elementData[size] = null;
     // 쓰지 않는 인스턴스의 주소를 제거하면 가비지가 될 수 있게 한다.
-    return (E) old;
+    return old;
   }
   
   public int size() {
     return this.size;
-  }
-  
-  public Object[] toArray() {
-    Object[] arr = Arrays.copyOf(elementData, this.size);
-    return arr;
-//    for(int i = 0; i < arr.length; i++) {
-//      arr[i] = elementData[i];
-//    }
-//    return arr;
-//  }
-  }
-  
-  @SuppressWarnings("unchecked")
-  public E[] toArray(E[] arr) {
-    if(arr.length < this.size) {
-      // 파라미터로 받은 배열이 작을 때는 새 배열을 만들어 리턴
-      // 방법1: 새 배열을 만들고 System.arraycopy()로 값을 복사한다.
-      // arr = (E[]) Array.newInstance(arr.getClass().getComponentType(), this.size);
-    
-      // 방법2: 새 배열을 만들고 값을 복사하는 것도 함께한다.
-      return (E[]) Arrays.copyOf(this.elementData, this.size, arr.getClass());
-    }
-    System.arraycopy(this.elementData, 0, arr, 0, this.size);
-    return arr; // 넉넉할 때는 파라미터로 받은 배열을 그대로 리턴
   }
 }

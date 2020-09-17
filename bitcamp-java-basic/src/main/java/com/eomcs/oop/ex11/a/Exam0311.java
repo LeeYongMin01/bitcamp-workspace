@@ -7,10 +7,10 @@ public class Exam0311 {
     //    private class A1 {} // 컴파일 오류!
     //    protected class A2 {} // 컴파일 오류!
     //    public class A3 {} // 컴파일 오류!
-
-    class A4 {} // OK!
+    
+    class A4 {} 
   }
-
+  
   void m2() {
     // 로컬 변수처럼 로컬 클래스에는 접근 제어 modifier 를 붙일 수 없다.
     //    private class B1 {} // 컴파일 오류!

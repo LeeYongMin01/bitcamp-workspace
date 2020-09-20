@@ -1,6 +1,6 @@
 package com.eomcs.oop.ex11.e;
 
-public class Exam0420 {
+public class Exam0230 {
   
   
 }

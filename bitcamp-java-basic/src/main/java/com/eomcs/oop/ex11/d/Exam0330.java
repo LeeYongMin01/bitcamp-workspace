@@ -7,19 +7,19 @@ class D3 {
     int v2 = 2;
     int v3 = 3;
     v3 = 30;
-
+    
     class X {
       void f() {
         // 로컬 클래스에서는 바깥 메서드의 로컬 변수를 사용할 수 있다.
-        // 1) final 로 선언된 경우
+        // 1) final로 선언된 경우
         System.out.printf("v1 = %d\n", v1);
-
-        // 2) final 로 선언된 것은 아니지만 값을 한 번만 할당한 경우.
+        
+        // 2) final로 선언된 것은 아니지만 값을 한번만 할당한 경우
         System.out.printf("v2 = %d\n", v2);
-
-        // => 값을 여러 번 할당한 경우에는 접근할 수 없다.
-        //System.out.printf("v3 = %d\n", v3); // 컴파일 오류!
-
+        
+        // => 값을 여러번 할당한 경우에는 접근할 수 없다.
+        // System.out.printf("v3 = %d\n", v3); // 오류
+        
         // 결론!
         // - 상수 값이거나 상수에 준하는 경우(값을 한 번만 할당한 경우)
         //   로컬 클래스에서 메서드의 로컬 변수를 사용할 수 있다.
@@ -30,17 +30,15 @@ class D3 {
         //   메서드 호출이 끝났을 때 제거되기 때문이다.
       }
     }
-
+    
     X obj = new X();
     obj.f();
   }
 }
 
 public class Exam0330 {
-
   public static void main(String[] args) {
     D3 obj = new D3();
     obj.m1();
   }
-
 }

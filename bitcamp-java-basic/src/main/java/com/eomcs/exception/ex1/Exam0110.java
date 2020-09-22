@@ -5,6 +5,6 @@ public class Exam0110 {
   public static void main(String[] args) {
     // 유효한 값을 지정하여 메서드를 호출할 때,
     int result = Calculator.compute("+", 100, 200);
-    System.out.println(result);
+        System.out.println(result);
   }
 }

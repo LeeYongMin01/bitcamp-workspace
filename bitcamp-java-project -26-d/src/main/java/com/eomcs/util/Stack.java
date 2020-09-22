@@ -39,15 +39,19 @@ public class Stack<E> extends LinkedList<E> {
     return newStack;
   }
   
+  // AbstractList 에서 구현한 iterator()를 
+  // Stack 자료 구조에 맞춰 오버라이딩 한다.
   @Override
   public Iterator<E> iterator() {
     
- // local class에는 로컬 변수처럼 접근 제어 키워드(private, protected, public)를 붙일 수 없다.
-    
-  class StackIterator implements Iterator<E> {
-    Stack<E> stack;
-    
-    public StackIterator() {
+    // 익명 클래스는 이름이 없기 때문에 
+    // 클래스를 정의하자마자 바로 인스턴스를 생성해야 한다.
+    return new Iterator<E>() {
+      Stack<E> stack;
+      
+      { // 인스턴스 초기화 블록
+        // 익명 클래스는 이름이 없기 때문에 생성자를 만들 수 없다.
+        // => 이런 경우에 인스턴스 초기화 블록을 사용할 수 있다.
       try {
         this.stack = Stack.this.clone();
       } catch (Exception e) {
@@ -66,7 +70,6 @@ public class Stack<E> extends LinkedList<E> {
         throw new NoSuchElementException();
       return stack.pop();
     }
-  }
-    return new StackIterator();
+  };
   }
 }

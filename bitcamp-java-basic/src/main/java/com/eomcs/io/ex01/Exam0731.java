@@ -7,52 +7,48 @@ import java.io.FileFilter;
 public class Exam0731 {
 
   public static void main(String[] args) throws Exception {
-
+    
     File dir = new File("bin/main");
     System.out.println(dir.getCanonicalPath());
-
+    
     printList(dir, "");
   }
-
+  
   static void printList(File dir, String packageName) {
-
     File[] files = dir.listFiles(new FileFilter() {
       @Override
       public boolean accept(File pathname) {
-        if (pathname.isHidden()) {
+        if(pathname.isHidden()) {
           return false;
         }
-
-        if (pathname.getName().contains("$")) {
+        
+        if(pathname.getName().contains("$")) {
           return false;
         }
-
-        if (pathname.isDirectory()
+        
+        if(pathname.isDirectory()
             || (pathname.isFile() && pathname.getName().endsWith(".class"))) {
           return true;
         }
         return false;
       }
     });
-
-    if (packageName.length() > 0) {
+    
+    if(packageName.length() > 0) {
       packageName += ".";
     }
-    for (File file : files) {
-      if (file.isDirectory()) {
+    for(File file : files) {
+      if(file.isDirectory()) {
         printList(file, packageName + file.getName());
       } else {
         System.out.println(packageName + file.getName().replace(".class", ""));
       }
     }
   }
-
+  
   static void printIndent(int level) {
-    for (int i = 0; i < level; i++) {
-      System.out.print("  ");
+    for(int i = 0; i < level; i++) {
+      System.out.print(" ");
     }
   }
-
 }
-
-

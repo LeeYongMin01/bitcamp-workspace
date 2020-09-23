@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 public class Exam0440 {
-
+  
   static void m(int i) throws Exception, RuntimeException, SQLException, IOException {
     if (i == 0)
       throw new Exception();
@@ -21,21 +21,20 @@ public class Exam0440 {
     try {
       // try 블록에서 예외가 발생할 수 있는 메서드를 호출한다.
       m(1);
-
+      
     } catch (Exception e) {
-      // 여러 개의 예외를 받을 때 수퍼 클래스 변수로 먼저 받지 말라!
+      
+      // 여러 개의 예외를 받을 때 수퍼 클래스 변수로 먼저 받지 말라
       // 그러면 그 클래스의 모든 서브 클래스 객체도 다 받게 된다.
-      // 즉 서브 클래스의 변수에서 받을 기회조차 없다.
-      // => 예외 객체를 정확하게 받고 싶다면 Exam0430.java 처럼
-      // 서브 클래스 예외부터 받아라.
-      //
+      // 즉, 서브 클래스의 변수에서 받을 기회조차 부여받지 못한다.
+      // => 예외 객체를 정확하게 받고 싶다면 서브 클래스 예외부터 받아야한다.
+      
     } catch (IOException e) {
-
+      
     } catch (SQLException e) {
-
+      
     } catch (RuntimeException e) {
-
+      
     }
   }
-
 }

@@ -20,6 +20,6 @@ public class Exam0620 {
       keyScan.close();
       System.out.println("스캐너 자원 해제!");
     }
-  }
-
+    
+    }
 }

@@ -4,7 +4,6 @@ package com.eomcs.io.ex01;
 import java.io.File;
 
 public class Exam0210 {
-
   public static void main(String[] args) throws Exception {
     // File 클래스
     // => 파일이나 디렉토리 정보를 관리
@@ -31,7 +30,6 @@ public class Exam0210 {
     System.out.printf("존재여부: %b\n", file1.exists());
     System.out.printf("실행가능여부: %b\n", file1.canExecute());
   }
-
 }
 
 

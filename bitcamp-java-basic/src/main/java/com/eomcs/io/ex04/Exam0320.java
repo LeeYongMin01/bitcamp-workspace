@@ -27,9 +27,3 @@ public class Exam0320 {
     System.out.printf("%x\n", value);
   }
 }
-
-
-
-
-
-

@@ -2,9 +2,9 @@ package com.eomcs.io.ex05;
 
 import java.io.FileInputStream;
 
-public class DataInputStream extends FileInputStream {
+public class DataFileInputStream extends FileInputStream {
 
-  public DataInputStream(String filename) throws Exception {
+  public DataFileInputStream(String filename) throws Exception {
     super(filename);
   }
 

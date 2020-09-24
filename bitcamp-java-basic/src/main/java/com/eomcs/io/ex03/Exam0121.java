@@ -1,5 +1,5 @@
 package com.eomcs.io.ex03;
 
-public class Exam0320 {
+public class Exam0121 {
 
 }

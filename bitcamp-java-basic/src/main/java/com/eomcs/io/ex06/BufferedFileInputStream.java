@@ -3,12 +3,12 @@ package com.eomcs.io.ex06;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-public class BufferedInputStream extends FileInputStream {
+public class BufferedFileInputStream extends FileInputStream {
   byte[] buf = new byte[8192];
   int size; // 배열에 저장되어 있는 바이트의 수
   int cursor; // 바이트 읽은 배열의 위치
 
-  public BufferedInputStream(String filename) throws Exception {
+  public BufferedFileInputStream(String filename) throws Exception {
     super(filename);
   }
 

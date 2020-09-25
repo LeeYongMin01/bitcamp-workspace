@@ -3,11 +3,11 @@ package com.eomcs.io.ex06;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-public class BufferedOutputStream extends FileOutputStream {
+public class BufferedFileOutputStream extends FileOutputStream {
   byte[] buf = new byte[8196];
   int cursor;
 
-  public BufferedOutputStream(String filename) throws Exception {
+  public BufferedFileOutputStream(String filename) throws Exception {
     super(filename);
   }
 

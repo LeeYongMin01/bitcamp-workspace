@@ -1,14 +1,14 @@
-// BufferedInputStream과 BufferedOutputStream을 사용하여 파일 복사 및 시간 측정
+// BufferedFileInputStream과 BufferedFileOutputStream을 사용하여 파일 복사 및 시간 측정
 package com.eomcs.io.ex06;
 
 public class Exam0320 {
 
   public static void main(String[] args) throws Exception {
-    BufferedInputStream in = new BufferedInputStream("temp/jls11.pdf");
-    BufferedOutputStream out = new BufferedOutputStream("temp/jls11_4.pdf");
-
-    int b;
-
+    BufferedFileInputStream in = new BufferedFileInputStream("temp/jls11.pdf");
+    BufferedFileOutputStream out = new BufferedFileOutputStream("temp/jls11_4.pdf");
+    
+    int b; 
+    
     long startTime = System.currentTimeMillis(); // 밀리초
 
     while ((b = in.read()) != -1)
@@ -24,6 +24,6 @@ public class Exam0320 {
 
     in.close();
     out.close();
+    
   }
-
 }

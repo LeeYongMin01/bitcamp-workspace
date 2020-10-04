@@ -1,5 +1,7 @@
 package com.eomcs.pms;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -13,9 +15,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.NoSuchElementException;
 import java.util.Queue;
-import java.util.Scanner;
 import com.eomcs.pms.domain.Board;
 import com.eomcs.pms.domain.Member;
 import com.eomcs.pms.domain.Project;
@@ -163,11 +163,11 @@ public class App {
   }
   
   private static void saveBoards() {
-    FileWriter out = null;
+   BufferedWriter out = null;
 
     try {
       // 파일로 데이터를 출력할 때 사용할 도구를 준비한다.
-      out = new FileWriter(boardFile);
+      out = new BufferedWriter(new FileWriter(boardFile));
 
       for (Board board : boardList) {
         // 게시글 목록에서 게시글 데이터를 꺼내 CSV 형식으로 출력한다.
@@ -179,19 +179,18 @@ public class App {
             board.getRegisteredDate(),
             board.getViewCount());
         out.write(record);
-        // 주의!
-        // - write() 는 String 을 출력할 때, 
-        // - JVM 환경 변수 'file.encoding' 에 설정된 문자집합으로 
-        //   인코딩하여 바이트 배열을 출력한다.
-        // - JVM을 실행할 때 다음과 같이 실행하면 이 환경 변수의 값을 설정할 수 있다.
-        //      $ java -d bin/main -Dfile.encoding=UTF-8 ...
-        // - 이클립스에서 자바 프로그램을 실행하면 위와 같이 JVM 환경 변수가 자동으로 추가된다.
-        // - 만약 CLI(command line interface; 콘솔, 명령창, 파워셀) 에서 저 옵션없이 실행한다면
-        //   운영체제에 따라 다음과 같이 자동으로 문자집합이 설정된다.
-        //      Windows: MS949
-        //      Linux/macOS/Unix: UTF-8
-        //
+        // 출력한 내용을 버퍼에 저장된다.
+        // 버퍼가 꽉차면 FileWriter를 이용하여 출력한다.
       }
+      out.flush();
+      
+      // close()를 호출하면 이 메서드에서 flush()를 호출할 것이다.
+      // 그러나 가능한 버퍼를 사용하는 경우에는 출력이 끝난 후 
+      // 잔여 데이터를 출력하도록  flush() 호출을 습관 들여라.
+      // 네트워크 통신에서 데이터 출력할 때 flush()를 안해서 
+      // 데이터가 상대편에게 넘어가지 않는 경우가 있다.
+      // 이런 상황을 고려해서 flush() 호출을 습관들여라.
+      
       System.out.printf("총 %d 개의 게시글 데이터를 저장했습니다.\n", boardList.size());
 
     } catch (IOException e) {
@@ -207,21 +206,18 @@ public class App {
   }
 
   private static void loadBoards() {
-    Scanner in = null;
+    BufferedReader in = null;
 
     try {
-      // 파일을 읽을 때 사용할 도구를 준비한다.
-      in = new Scanner(new FileReader(boardFile));
+      in = new BufferedReader(new FileReader(boardFile));
 
       while (true) {
-        try {
-          // 파일에서 한 줄 읽는다.
-          String record = in.nextLine();
-
-          // 콤마로 각 데이터를 분리한다.
+          String record = in.readLine();
+          if(record == null) {
+            break;
+          }
           String[] fields = record.split(",");
 
-          // 데이터가 저장된 순서대로 읽어서 객체에 저장한다.
           Board board = new Board();
           board.setNo(Integer.parseInt(fields[0]));
           board.setTitle(fields[1]);
@@ -230,37 +226,27 @@ public class App {
           board.setRegisteredDate(Date.valueOf(fields[4]));
           board.setViewCount(Integer.parseInt(fields[5]));
 
-          // 게시글 객체를 Command가 사용하는 목록에 저장한다.
-          boardList.add(board);
-        } catch (NoSuchElementException e) {
-          break;
-        }
+          boardList.add(board); 
       }
       System.out.printf("총 %d 개의 게시글 데이터를 로딩했습니다.\n", boardList.size());
 
     } catch (Exception e) {
       System.out.println("게시글 파일 읽기 중 오류 발생! - " + e.getMessage());
-      // 파일에서 데이터를 읽다가 오류가 발생하더라도
-      // 시스템을 멈추지 않고 계속 실행하게 한다.
-      // 이것이 예외처리를 하는 이유이다!!!
     } finally {
       try {
         in.close();
       } catch (Exception e) {
-        // close() 실행하다가 오류가 발생한 경우 무시한다.
-        // 왜? 닫다가 발생한 오류는 특별히 처리할 게 없다.
       }
     }
   }
   
   private static void saveMembers() {
-    FileWriter out = null;
+    BufferedWriter out = null;
     
     try {
-      out = new FileWriter(memberFile);
+      out = new BufferedWriter(new FileWriter(memberFile));
       
       for(Member member : memberList) {
-        // 회원 목록에서 회원 데이터를 꺼내 CSV 형식으로 출력한다.
         String record = String.format("%d,%s,%s,%s,%s,%s,%s\n", 
             member.getNo(),
             member.getName(),
@@ -272,6 +258,9 @@ public class App {
         
         out.write(record);
     }
+      
+      out.flush();
+
       System.out.printf("총 %d 개의 회원 데이터를 저장했습니다.\n", memberList.size());
       
     } catch (IOException e) {
@@ -287,14 +276,16 @@ public class App {
   }
   
   private static void loadMembers() {
-    Scanner in = null;
+    BufferedReader in = null;
     
     try {
-      in = new Scanner(new FileReader(memberFile));
+      in = new BufferedReader(new FileReader(memberFile));
       
       while(true) {
-        try {
-          String record = in.nextLine();
+          String record = in.readLine();
+          if(record == null) {
+            break;
+          }
           String[] fields = record.split(",");
           
           Member member = new Member();
@@ -307,9 +298,6 @@ public class App {
           member.setRegisteredDate(Date.valueOf(fields[6]));
           
           memberList.add(member);
-        } catch (Exception e) {
-          break;
-        }
       }
       System.out.printf("총 %d 개의 회원 데이터를 로딩했습니다.\n", memberList.size());
       
@@ -326,10 +314,10 @@ public class App {
   }
   
   private static void saveProjects() {
-    FileWriter out = null;
+    BufferedWriter out = null;
     
     try {
-      out = new FileWriter(projectFile);
+      out = new BufferedWriter(new FileWriter(projectFile));
       
 
       for (Project project : projectList) {
@@ -345,6 +333,9 @@ public class App {
         
         out.write(record);
       }
+      
+      out.flush();
+      
       System.out.printf("총 %d 개의 프로젝트 데이터를 저장했습니다.\n", projectList.size());
 
   } catch (IOException e) {
@@ -360,14 +351,16 @@ public class App {
   } 
   
   private static void loadProjects() {
-    Scanner in = null;
+    BufferedReader in = null;
     
     try {
-      in = new Scanner(new FileReader(projectFile));
+      in = new BufferedReader(new FileReader(projectFile));
       
       while (true) {
-        try {
-          String record = in.nextLine();
+          String record = in.readLine();
+          if(record == null) {
+            break;
+          }
           String[] fields = record.split(",");
 
           Project project = new Project();
@@ -380,9 +373,6 @@ public class App {
           project.setMembers(fields[6]);
       
         projectList.add(project);
-      } catch (Exception e) {
-        break;
-      }
       }
       System.out.printf("총 %d 개의 프로젝트 데이터를 로딩했습니다.\n", projectList.size());
    
@@ -398,13 +388,12 @@ public class App {
   }
   
   private static void saveTasks() {
-    FileWriter out = null;
+    BufferedWriter out = null;
 
     try {
-      out = new FileWriter(taskFile);
+      out = new BufferedWriter(new FileWriter(taskFile));
 
       for (Task task : taskList) {
-        // 작업 목록에서 작업 데이터를 꺼내 CSV 형식으로 출력한다.
         String record = String.format("%d,%s,%s,%d,%s\n", 
             task.getNo(),
             task.getContent(),
@@ -414,6 +403,9 @@ public class App {
         
         out.write(record);
       }
+      
+      out.flush();
+      
       System.out.printf("총 %d 개의 작업 데이터를 저장했습니다.\n", taskList.size());
 
     } catch (IOException e) {
@@ -428,14 +420,16 @@ public class App {
   }
 
   private static void loadTasks() {
-    Scanner in = null;
+    BufferedReader in = null;
 
     try {
-      in = new Scanner(new FileReader(taskFile));
+      in = new BufferedReader(new FileReader(taskFile));
 
       while (true) {
-        try {
-          String record = in.nextLine();
+          String record = in.readLine();
+          if(record == null) {
+            break;
+          }
           String[] data = record.split(",");
 
           Task task = new Task();
@@ -446,9 +440,6 @@ public class App {
           task.setOwner(data[4]);
 
         taskList.add(task);
-      } catch (Exception e) {
-        break;
-      }
       }
       System.out.printf("총 %d 개의 작업 데이터를 로딩했습니다.\n", taskList.size());
 

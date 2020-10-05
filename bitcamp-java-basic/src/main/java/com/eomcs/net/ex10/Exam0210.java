@@ -1,17 +1,25 @@
+// Base64 인코딩 : 이미지 파일 --> 인코딩
 package com.eomcs.net.ex10;
 
 import java.io.File;
-import java.net.URLDecoder;
+import java.io.FileInputStream;
+import java.util.Base64;
+import java.util.Base64.Encoder;
 
 public class Exam0210 {
 
   public static void main(String[] args) throws Exception {
-    String url = "/aaa/okok/a%20%20%23%20%21.gif";
-    System.out.println(URLDecoder.decode(url, "UTF-8"));
+    File file = new File("./sample/test1.jpg");
     
-    File f = new File("./webroot", URLDecoder.decode(url, "UTF-8"));
-    System.out.println(f.getCanonicalPath());
-
+    FileInputStream in = new FileInputStream(file);
+    byte[] bytes = in.readAllBytes();
+    in.close();
+    
+    Encoder encoder = Base64.getEncoder();
+    byte[] encodedBytes = encoder.encode(bytes);
+    System.out.println(new String(encodedBytes));
+      
+    
   }
 
 }

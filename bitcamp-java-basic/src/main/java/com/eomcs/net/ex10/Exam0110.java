@@ -1,4 +1,4 @@
-// Base64 인코딩
+// Base64 인코딩 : byte[] 인코딩 및 디코딩
 package com.eomcs.net.ex10;
 
 import java.util.Base64;

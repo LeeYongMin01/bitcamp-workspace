@@ -24,6 +24,7 @@ public class Client0110 {
     out.close();
     socket.close();
     System.out.println("서버와 연결 끊음!");
+  
   }
 }
 

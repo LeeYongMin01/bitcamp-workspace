@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 public class Server0430 {
   public static void main(String[] args) throws Exception {
+    
     Scanner keyboard = new Scanner(System.in);
 
     ServerSocket ss = new ServerSocket(8888, 2);

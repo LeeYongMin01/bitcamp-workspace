@@ -6,8 +6,9 @@ import java.net.URL;
 public class Exam02 {
 
   public static void main(String[] args) throws Exception {
-    // 웹 상에서 자원의 위치를 표현하는 방법
-    URL url = new URL("https://bitcamp.co.kr/index.php");
+    // 포트번호 명시
+    // - http://서버주소:포트번호/자원경로?파라미터명=값&파라미터명=값&파라미터명=값 
+    URL url = new URL("https://search.naver.com/search.naver?sm=top_hty&fbm=1&ie=utf8&query=bitcamp");
 
     // URL 분석
     System.out.printf("프로토콜: %s\n", url.getProtocol());

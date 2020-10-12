@@ -43,9 +43,8 @@ import com.eomcs.pms.handler.TaskDeleteCommand;
 import com.eomcs.pms.handler.TaskDetailCommand;
 import com.eomcs.pms.handler.TaskListCommand;
 import com.eomcs.pms.handler.TaskUpdateCommand;
-import com.eomcs.util.CsvObject;
-import com.eomcs.util.ObjectFactory;
 import com.eomcs.util.Prompt;
+import com.google.gson.Gson;
 
 public class App {
  
@@ -162,7 +161,10 @@ public class App {
     }
   }
   
-  private static<T extends CsvObject> void saveObjects(Collection<T> list, File file) {
+  // 이제 더이상 저장할 객체를 CsvObject로 제한할 필요가 없다.
+  // 어떤 타입의 객체든지 JSON 형식으로 변환할 수 있기 때문이다.
+  
+  private static void saveObjects(Collection<?> list, File file) {
    BufferedWriter out = null;
 
     try {

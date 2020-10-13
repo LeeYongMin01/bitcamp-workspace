@@ -43,7 +43,7 @@ import com.eomcs.util.Prompt;
 
 public class App {
 
-  // 옵저버와 공유할 Map 객체를 선언
+  // 옵저버와 공유할 맵 객체
   Map<String, Object> context = new Hashtable<>();
 
   // 옵저버를 보관할 컬렉션 객체
@@ -64,40 +64,39 @@ public class App {
     for (ApplicationContextListener listener : listeners) {
       // 곧 서비스를 시작할테니 준비하라고,
       // 서비스 시작에 관심있는 각 옵저버에게 통지한다.
-      // => 옵저버에게 Map 객체를 넘겨준다.
-      // => 옵저버는 작업 결과를 파라미터로 넘겨준 Map 객체에 담아 줄 것이다.
+      // => 옵저버에게 맵 객체를 넘겨준다.
+      // => 옵저버는 작업 결과를 파라미터로 넘겨준 맵 객체에 담아 줄 것이다.
       listener.contextInitialized(context);
     }
   }
 
- //service() 실행 후에 옵저버에게 통지한다.
- private void notifyApplicationContextListenerOnServiceStopped() {
-   for (ApplicationContextListener listener : listeners) {
-     // 서비스가 종료되었으니 마무리 작업하라고,
-     // 마무리 작업에 관심있는 각 옵저버에게 통지한다.
-     // => 옵저버에게 Map 객체를 넘겨준다.
-     // => 옵저버는 작업 결과를 파라미터로 넘겨준 Map 객체에 담아 줄 것이다.
-     listener.contextDestroyed(context);
-   }
- }
+  // service() 실행 후에 옵저버에게 통지한다.
+  private void notifyApplicationContextListenerOnServiceStopped() {
+    for(ApplicationContextListener listener : listeners) {
+      // 곧 서비스를 시작할테니 준비하라고,
+      // 서비스 시작에 관심있는 각 옵저버에게 통지한다.
+      // => 옵저버에게 맵 객체를 넘겨준다.
+      // => 옵저버는 작업 결과를 파라미터로 넘겨준 맵 객체에 담아 줄 것이다.
+      listener.contextDestroyed(context);
+    }
+  }
 
- public static void main(String[] args) throws Exception {
-   App app = new App();
+  public static void main(String[] args) throws Exception {
+    App app = new App();
 
-   // 옵저버 등록
-   app.addApplicationContextListener(new AppInitListener());
-   app.addApplicationContextListener(new DataHandlerListener());
+    // 옵저버 등록
+    app.addApplicationContextListener(new AppInitListener());
+    app.addApplicationContextListener(new DataHandlerListener());
 
-   app.service();
- }
+    app.service();
+  }
 
   @SuppressWarnings("unchecked")
   public void service() throws Exception {
 
-    // 옵저버에게 통지한다.
     notifyApplicationContextListenerOnServiceStarted();
 
-    // 옵저버가 작업한 결과를 Map에서 꺼낸다.
+    // 옵저버가 작업한 결과를 맵에서 꺼낸다.
     List<Board> boardList = (List<Board>) context.get("boardList");
     List<Member> memberList = (List<Member>) context.get("memberList");
     List<Project> projectList = (List<Project>) context.get("projectList");
@@ -173,13 +172,11 @@ public class App {
   Prompt.close();
 
 
-
-  // 옵저버에게 통지한다.
   notifyApplicationContextListenerOnServiceStopped();
 
  }
 
-   void printCommandHistory(Iterator<String> iterator) {
+  void printCommandHistory(Iterator<String> iterator) {
     try {
       int count = 0;
       while(iterator.hasNext()) {

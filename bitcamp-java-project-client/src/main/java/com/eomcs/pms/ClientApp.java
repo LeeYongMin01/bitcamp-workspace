@@ -4,34 +4,61 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-
-// Stateful 통신
-// => 서버와 연결하여 간단한 메시지 주고 받기
+import com.eomcs.util.Prompt;
 
 public class ClientApp {
     public static void main(String[] args) {
 
-      // 서버주소 : localhost
-      // 서버포트 : 8888
+      if(args.length != 2) {
+        System.out.println("프로그램 사용법:");
+        System.out.println(" java -cp ... ClientApp 서버주소 포트번호");
+        System.exit(0);
+      }
 
-      // 서버와 연결된 소켓을 생성한다.
-      // 소켓을 통해 문자열을 입출력할 수 있도록 스트림 객체를 준비한다.
-      // 먼저 서버에 간단한 인사말을 보낸다.
-      // 서버가 응답한 메시지를 출력한다.
+      // 클라이언트가 서버에 stop 명령을 보내면 다음 변수를 true로 변경한다.
+      boolean stop = false;
 
-      try (Socket socket = new Socket("localhost", 8888);
+      try (Socket socket = new Socket(args[0], Integer.parseInt(args[1]));
           PrintWriter out = new PrintWriter(socket.getOutputStream());
-          BufferedReader in  = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
+          BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
 
-        out.println("Hello!");
+        while(true) {
+
+        String input = Prompt.inputString("명령> ");
+        out.println(input);
         out.flush();
 
-        String response = in.readLine();
-        System.out.println(response);
+        receiveResponse(in);
+
+        if(input.equalsIgnoreCase("quit")) {
+          break;
+        } else if(input.equalsIgnoreCase("stop")) {
+          stop = true;
+          break;
+        }
+        }
 
       } catch (Exception e) {
         e.printStackTrace();
       }
 
+      if(stop) {
+        // 서버를 멈추기 위해 그냥 접속했다가 끊는다.
+        try (Socket socket = new Socket(args[0], Integer.parseInt(args[1]))) {
+          // 아무것도 안한다.
+          // 서버가 stop 할 기회를 주기 위함이다.
+        } catch (Exception e) {
+          // 아무것도 안한다.
+        }
+      }
+    }
+
+    private static void receiveResponse(BufferedReader in) throws Exception {
+      while(true) {
+        String response = in.readLine();
+        if(response.length() == 0)
+          break;
+        System.out.println(response);
+      }
     }
 }

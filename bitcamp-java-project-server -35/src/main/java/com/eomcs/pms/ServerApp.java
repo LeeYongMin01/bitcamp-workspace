@@ -96,7 +96,7 @@ public class ServerApp {
         BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         PrintWriter out = new PrintWriter(socket.getOutputStream())) {
 
-      // 클라이언트가 보낸 요청을 읽는다.
+        // 클라이언트가 보낸 요청을 읽는다.
         String request = in.readLine();
 
         if (request.equalsIgnoreCase("stop")) {

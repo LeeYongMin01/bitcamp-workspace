@@ -12,6 +12,11 @@ dependencies {
     implementation 'com.google.guava:guava:29.0-jre'
     implementation 'org.mariadb.jdbc:mariadb-java-client:2.7.0'
     testImplementation 'junit:junit:4.13'
+    // MSSQL JDBC driver
+    implementation 'com.microsoft.sqlserver:mssql-jdbc:8.4.1.jre11'
+
+    // Oracle JDBC driver
+    implementation 'com.oracle.database.jdbc:ojdbc10-production:19.8.0.0'
 }
 
 application {

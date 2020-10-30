@@ -3,6 +3,7 @@ package com.eomcs.pms.handler;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import com.eomcs.util.Prompt;
 
 public class MemberUpdateCommand implements Command {
@@ -16,12 +17,33 @@ public class MemberUpdateCommand implements Command {
     String photo = null;
     String tel = null;
 
-    email = Prompt.inputString(
-        String.format("이메일(%s)? ", email));
-    photo = Prompt.inputString(
-        String.format("사진(%s)? ", photo));
-    tel = Prompt.inputString(
-        String.format("전화(%s)? ", tel));
+    try (Connection con = DriverManager.getConnection(
+        "jdbc:mariadb://localhost:3306/user1db?user=user1&password=1111");
+
+      PreparedStatement stmt = con.prepareStatement(
+          "select no, email, photo, tel"
+          + " from pms_member"
+          + " where no = " + no);
+        ResultSet rs = stmt.executeQuery()) {
+
+    if (rs.next()) {
+      email = rs.getString("email");
+      photo = rs.getString("photo");
+      tel = rs.getString("tel");
+
+    } else {
+      System.out.println("해당 번호의 게시물이 존재하지 않습니다.");
+      return;
+    }
+    } catch(Exception e) {
+      System.out.println("게시글 조회 중 오류 발생!");
+      e.printStackTrace();
+      return;
+    }
+
+    email = Prompt.inputString(String.format("이메일(%s)? ", email));
+    photo = Prompt.inputString(String.format("사진(%s)? ", photo));
+    tel = Prompt.inputString(String.format("전화(%s)? ", tel));
 
     String response = Prompt.inputString("정말 변경하시겠습니까?(y/N) ");
     if (!response.equalsIgnoreCase("y")) {
@@ -32,7 +54,7 @@ public class MemberUpdateCommand implements Command {
     try (Connection con = DriverManager.getConnection(
         "jdbc:mysql://localhost:3306/user1db?user=user1&password=1111");
         PreparedStatement stmt = con.prepareStatement(
-            "update pms_member set email = ?, photo = ? tel = ? where no = ?"))
+            "update pms_member set email = ?, photo = ?, tel = ? where no = ?"))
     {
 
       stmt.setString(1, email);

@@ -15,16 +15,15 @@ public class MemberListCommand implements Command {
         "jdbc:mariadb://localhost:3306/user1db?user=user1&password=1111");
 
      PreparedStatement stmt = con.prepareStatement(
-         "select name, email, photo, tel, cdt"
+         "select no, name, email, photo, tel, cdt"
          + " from pms_member "
          + " order by no desc");
 
       ResultSet rs = stmt.executeQuery()) {
 
-    System.out.println("이름, 이메일, 사진, 전화번호, 등록일");
-
     while (rs.next()) {
-      System.out.printf("%d, %s, %s, %d\n",
+      System.out.printf("%d, %s, %s, %s, %s, %s\n",
+          rs.getInt("no"),
           rs.getString("name"),
           rs.getString("email"),
           rs.getString("photo"),

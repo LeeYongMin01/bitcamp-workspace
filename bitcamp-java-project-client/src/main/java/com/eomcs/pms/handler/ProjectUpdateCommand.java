@@ -1,19 +1,11 @@
 package com.eomcs.pms.handler;
 
 import java.sql.Date;
-import java.util.List;
 import com.eomcs.pms.domain.Project;
 import com.eomcs.util.Prompt;
 
 public class ProjectUpdateCommand implements Command {
 
-  List<Project> projectList;
-  MemberListCommand memberListCommand;
-
-  public ProjectUpdateCommand(List<Project> list, MemberListCommand memberListCommand) {
-    this.projectList = list;
-    this.memberListCommand = memberListCommand;
-  }
 
   @Override
   public void execute() {

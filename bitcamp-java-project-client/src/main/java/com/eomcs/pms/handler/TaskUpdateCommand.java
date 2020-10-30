@@ -1,19 +1,11 @@
 package com.eomcs.pms.handler;
 
 import java.sql.Date;
-import java.util.List;
 import com.eomcs.pms.domain.Task;
 import com.eomcs.util.Prompt;
 
 public class TaskUpdateCommand implements Command {
 
-  List<Task> taskList;
-  MemberListCommand memberListCommand;
-
-  public TaskUpdateCommand(List<Task> list, MemberListCommand memberListCommand) {
-    this.taskList = list;
-    this.memberListCommand = memberListCommand;
-  }
 
   @Override
   public void execute() {

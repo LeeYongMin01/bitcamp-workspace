@@ -23,13 +23,14 @@ repositories {
 }
 
 dependencies {
- // JSON 라이브러리
-implementation 'com.google.code.gson:gson:2.8.6'
+    // JSON 라이브러리
+    implementation 'com.google.code.gson:gson:2.8.6'
+    
     // This dependency is used by the application.
     implementation 'com.google.guava:guava:29.0-jre'
 
     // Use JUnit test framework
-    testImplementation 'junit:junit:4.13'
+    testImplementation 'junit:junit:4.13.1'
 }
 
 application {

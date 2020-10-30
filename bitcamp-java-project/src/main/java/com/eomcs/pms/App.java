@@ -43,8 +43,8 @@ import com.eomcs.util.Prompt;
 
 public class App {
 
-  // 옵저버와 공유할 Map 객체를 선언
-  Map<String, Object> context = new Hashtable<>();
+  // 옵저버와 공유할 맵 객체
+  Map<String,Object> context = new Hashtable<>();
 
   // 옵저버를 보관할 컬렉션 객체
   List<ApplicationContextListener> listeners = new ArrayList<>();
@@ -64,40 +64,40 @@ public class App {
     for (ApplicationContextListener listener : listeners) {
       // 곧 서비스를 시작할테니 준비하라고,
       // 서비스 시작에 관심있는 각 옵저버에게 통지한다.
-      // => 옵저버에게 Map 객체를 넘겨준다.
-      // => 옵저버는 작업 결과를 파라미터로 넘겨준 Map 객체에 담아 줄 것이다.
+      // => 옵저버에게 맵 객체를 넘겨준다.
+      // => 옵저버는 작업 결과를 파라미터로 넘겨준 맵 객체에 담아 줄 것이다.
       listener.contextInitialized(context);
     }
   }
 
- //service() 실행 후에 옵저버에게 통지한다.
- private void notifyApplicationContextListenerOnServiceStopped() {
-   for (ApplicationContextListener listener : listeners) {
-     // 서비스가 종료되었으니 마무리 작업하라고,
-     // 마무리 작업에 관심있는 각 옵저버에게 통지한다.
-     // => 옵저버에게 Map 객체를 넘겨준다.
-     // => 옵저버는 작업 결과를 파라미터로 넘겨준 Map 객체에 담아 줄 것이다.
-     listener.contextDestroyed(context);
-   }
- }
+  // service() 실행 후에 옵저버에게 통지한다.
+  private void notifyApplicationContextListenerOnServiceStopped() {
+    for (ApplicationContextListener listener : listeners) {
+      // 서비스가 종료되었으니 마무리 작업하라고,
+      // 마무리 작업에 관심있는 각 옵저버에게 통지한다.
+      // => 옵저버에게 맵 객체를 넘겨준다.
+      // => 옵저버는 작업 결과를 파라미터로 넘겨준 맵 객체에 담아 줄 것이다.
+      listener.contextDestroyed(context);
+    }
+  }
 
- public static void main(String[] args) throws Exception {
-   App app = new App();
 
-   // 옵저버 등록
-   app.addApplicationContextListener(new AppInitListener());
-   app.addApplicationContextListener(new DataHandlerListener());
+  public static void main(String[] args) throws Exception {
+    App app = new App();
 
-   app.service();
- }
+    // 옵저버 등록
+    app.addApplicationContextListener(new AppInitListener());
+    app.addApplicationContextListener(new DataHandlerListener());
+
+    app.service();
+  }
 
   @SuppressWarnings("unchecked")
   public void service() throws Exception {
 
-    // 옵저버에게 통지한다.
     notifyApplicationContextListenerOnServiceStarted();
 
-    // 옵저버가 작업한 결과를 Map에서 꺼낸다.
+    // 옵저버가 작업한 결과를 맵에서 꺼낸다.
     List<Board> boardList = (List<Board>) context.get("boardList");
     List<Member> memberList = (List<Member>) context.get("memberList");
     List<Project> projectList = (List<Project>) context.get("projectList");
@@ -135,54 +135,52 @@ public class App {
     Deque<String> commandStack = new ArrayDeque<>();
     Queue<String> commandQueue = new LinkedList<>();
 
-	 loop:
-	  while(true) {
-    	String inputStr = Prompt.inputString("명령> ");
+    loop:
+      while (true) {
+        String inputStr = Prompt.inputString("명령> ");
 
-    	if(inputStr.length() == 0) {
-    	  continue;
-    	}
+        if (inputStr.length() == 0) {
+          continue;
+        }
 
-    	commandStack.push(inputStr);
-    	commandQueue.offer(inputStr);
+        commandStack.push(inputStr);
+        commandQueue.offer(inputStr);
 
-    	switch(inputStr) {
-    	case "history" : printCommandHistory(commandStack.iterator()); break;
-    	case "history2" : printCommandHistory(commandQueue.iterator()); break;
-    	case "exit":
-    	case "quit":
-    		System.out.println("안녕!");
-    		break loop;
-    	default:
-    	  Command command = commandMap.get(inputStr);
-    	  if(command != null) {
-    	    try {
-    	      command.execute();
-    	    } catch(Exception e) {
-              System.out.println("--------------------------------------------------------------");
-              System.out.printf("명령어 실행 중 오류 발생: %s\n", e);
-              System.out.println("--------------------------------------------------------------");
-    	    }
-    	  } else {
-    		System.out.println("실행할 수 없는 명령입니다.");
-    	  }
-    	}
-    	System.out.println();
-	  }
+        switch (inputStr) {
+          case "history": printCommandHistory(commandStack.iterator()); break;
+          case "history2": printCommandHistory(commandQueue.iterator()); break;
+          case "quit":
+          case "exit":
+            System.out.println("안녕!");
+            break loop;
+          default:
+            Command command = commandMap.get(inputStr);
+            if (command != null) {
+              try {
+                // 실행 중 오류가 발생할 수 있는 코드는 try 블록 안에 둔다.
+                command.execute();
+              } catch (Exception e) {
+                // 오류가 발생하면 그 정보를 갖고 있는 객체의 클래스 이름을 출력한다.
+                System.out.println("--------------------------------------------------------------");
+                System.out.printf("명령어 실행 중 오류 발생: %s\n", e);
+                System.out.println("--------------------------------------------------------------");
+              }
+            } else {
+              System.out.println("실행할 수 없는 명령입니다.");
+            }
+        }
+        System.out.println();
+      }
 
-  Prompt.close();
+    Prompt.close();
 
+    notifyApplicationContextListenerOnServiceStopped();
+  }
 
-
-  // 옵저버에게 통지한다.
-  notifyApplicationContextListenerOnServiceStopped();
-
- }
-
-   void printCommandHistory(Iterator<String> iterator) {
+  void printCommandHistory(Iterator<String> iterator) {
     try {
       int count = 0;
-      while(iterator.hasNext()) {
+      while (iterator.hasNext()) {
         System.out.println(iterator.next());
         count++;
 
@@ -190,9 +188,12 @@ public class App {
           break;
         }
       }
-    } catch(Exception e) {
+    } catch (Exception e) {
       System.out.println("history 명령 처리 중 오류 발생!");
     }
   }
-}
 
+
+
+
+}

@@ -4,9 +4,16 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import com.eomcs.pms.dao.MemberDao;
 import com.eomcs.util.Prompt;
 
 public class MemberDetailCommand implements Command {
+
+  MemberDao memberDao;
+
+  public MemberDetailCommand(MemberDao memberDao) {
+   this.memberDao = memberDao;
+  }
 
   @Override
   public void execute() {

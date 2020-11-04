@@ -3,10 +3,17 @@ package com.eomcs.pms.handler;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import com.eomcs.pms.dao.MemberDao;
 import com.eomcs.pms.domain.Member;
 import com.eomcs.util.Prompt;
 
 public class MemberAddCommand implements Command {
+
+  MemberDao memberDao;
+
+  public MemberAddCommand(MemberDao memberDao) {
+   this.memberDao = memberDao;
+  }
 
   @Override
   public void execute() {

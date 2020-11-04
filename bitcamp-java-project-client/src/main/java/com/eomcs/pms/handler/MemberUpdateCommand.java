@@ -4,10 +4,17 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import com.eomcs.pms.dao.MemberDao;
 import com.eomcs.pms.domain.Member;
 import com.eomcs.util.Prompt;
 
 public class MemberUpdateCommand implements Command {
+
+  MemberDao memberDao;
+
+  public MemberUpdateCommand(MemberDao memberDao) {
+   this.memberDao = memberDao;
+  }
 
   @Override
   public void execute() {

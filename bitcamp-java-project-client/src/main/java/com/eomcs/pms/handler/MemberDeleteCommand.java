@@ -3,9 +3,16 @@ package com.eomcs.pms.handler;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import com.eomcs.pms.dao.MemberDao;
 import com.eomcs.util.Prompt;
 
 public class MemberDeleteCommand implements Command {
+
+  MemberDao memberDao;
+
+  public MemberDeleteCommand(MemberDao memberDao) {
+   this.memberDao = memberDao;
+  }
 
   @Override
   public void execute() {

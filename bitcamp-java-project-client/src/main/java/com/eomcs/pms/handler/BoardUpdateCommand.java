@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.Map;
 import com.eomcs.pms.dao.BoardDao;
 import com.eomcs.util.Prompt;
 
@@ -16,7 +17,7 @@ public class BoardUpdateCommand implements Command {
   }
 
   @Override
-  public void execute() {
+  public void execute(Map<String, Object> context) {
     System.out.println("[게시물 변경]");
     int no = Prompt.inputInt("번호? ");
 

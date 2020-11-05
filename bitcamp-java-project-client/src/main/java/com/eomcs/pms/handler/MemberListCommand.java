@@ -4,12 +4,13 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.Map;
 import com.eomcs.pms.domain.Member;
 
 public class MemberListCommand implements Command {
 
   @Override
-  public void execute() {
+  public void execute(Map<String, Object> context) {
     System.out.println("[회원 목록]");
 
     try (Connection con = DriverManager.getConnection(

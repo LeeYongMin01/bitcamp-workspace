@@ -1,5 +1,6 @@
 package com.eomcs.pms;
 
+import java.sql.Connection;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
@@ -15,6 +16,10 @@ import com.eomcs.pms.dao.BoardDao;
 import com.eomcs.pms.dao.MemberDao;
 import com.eomcs.pms.dao.ProjectDao;
 import com.eomcs.pms.dao.TaskDao;
+import com.eomcs.pms.dao.mariadb.BoardDaoImpl;
+import com.eomcs.pms.dao.mariadb.MemberDaoImpl;
+import com.eomcs.pms.dao.mariadb.ProjectDaoImpl;
+import com.eomcs.pms.dao.mariadb.TaskDaoImpl;
 import com.eomcs.pms.handler.BoardAddCommand;
 import com.eomcs.pms.handler.BoardDeleteCommand;
 import com.eomcs.pms.handler.BoardDetailCommand;
@@ -22,6 +27,7 @@ import com.eomcs.pms.handler.BoardListCommand;
 import com.eomcs.pms.handler.BoardUpdateCommand;
 import com.eomcs.pms.handler.Command;
 import com.eomcs.pms.handler.HelloCommand;
+import com.eomcs.pms.handler.LoginCommand;
 import com.eomcs.pms.handler.MemberAddCommand;
 import com.eomcs.pms.handler.MemberDeleteCommand;
 import com.eomcs.pms.handler.MemberDetailCommand;
@@ -97,10 +103,15 @@ public class App {
     Map<String,Command> commandMap = new HashMap<>();
 
     MemberListCommand memberListCommand = new MemberListCommand();
-    BoardDao boardDao = new BoardDao();
-    MemberDao memberDao = new MemberDao();
-    ProjectDao projectDao = new ProjectDao();
-    TaskDao taskDao = new TaskDao();
+
+
+    // AppInitListener가 준비한 Connection 객체를 꺼낸다.
+    Connection con = (Connection) context.get("con");
+
+    BoardDao boardDao = new BoardDaoImpl(con);
+    MemberDao memberDao = new MemberDaoImpl(con);
+    ProjectDao projectDao = new ProjectDaoImpl(con);
+    TaskDao taskDao = new TaskDaoImpl(con);
 
     commandMap.put("/board/add", new BoardAddCommand(boardDao, memberDao));
     commandMap.put("/board/list", new BoardListCommand(boardDao));
@@ -128,6 +139,8 @@ public class App {
 
     commandMap.put("/hello", new HelloCommand());
 
+    commandMap.put("/login", new LoginCommand(memberDao));
+
     Deque<String> commandStack = new ArrayDeque<>();
     Queue<String> commandQueue = new LinkedList<>();
 
@@ -154,7 +167,7 @@ public class App {
             if (command != null) {
               try {
                 // 실행 중 오류가 발생할 수 있는 코드는 try 블록 안에 둔다.
-                command.execute();
+                command.execute(context);
               } catch (Exception e) {
                 // 오류가 발생하면 그 정보를 갖고 있는 객체의 클래스 이름을 출력한다.
                 System.out.println("--------------------------------------------------------------");

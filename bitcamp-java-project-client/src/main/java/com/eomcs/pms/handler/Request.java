@@ -15,16 +15,12 @@ public class Request {
     return commandPath;
   }
 
-  public void setCommandPath(String commandPath) {
-    this.commandPath = commandPath;
-  }
-
   public Map<String, Object> getContext() {
     return context;
   }
 
-  public void setContext(Map<String, Object> context) {
-    this.context = context;
-  }
-
 }
+
+
+
+

@@ -17,10 +17,9 @@ public class MemberDaoImpl implements com.eomcs.pms.dao.MemberDao {
 
   @Override
   public int insert(Member member) throws Exception {
-    try (
-        PreparedStatement stmt = con.prepareStatement(
-            "insert into pms_member(name,email,password,photo,tel)"
-                + " values(?,?,password(?),?,?)")) {
+    try (PreparedStatement stmt = con.prepareStatement(
+        "insert into pms_member(name,email,password,photo,tel)"
+            + " values(?,?,password(?),?,?)")) {
 
       stmt.setString(1, member.getName());
       stmt.setString(2, member.getEmail());
@@ -33,9 +32,8 @@ public class MemberDaoImpl implements com.eomcs.pms.dao.MemberDao {
 
   @Override
   public int delete(int no) throws Exception {
-    try (
-        PreparedStatement stmt = con.prepareStatement(
-            "delete from pms_member where no=?")) {
+    try (PreparedStatement stmt = con.prepareStatement(
+        "delete from pms_member where no=?")) {
 
       stmt.setInt(1, no);
       return stmt.executeUpdate();
@@ -44,11 +42,10 @@ public class MemberDaoImpl implements com.eomcs.pms.dao.MemberDao {
 
   @Override
   public Member findByNo(int no) throws Exception {
-    try (
-        PreparedStatement stmt = con.prepareStatement(
-            "select no, name, email, photo, tel, cdt"
-                + " from pms_member"
-                + " where no = ?")) {
+    try (PreparedStatement stmt = con.prepareStatement(
+        "select no, name, email, photo, tel, cdt"
+            + " from pms_member"
+            + " where no = ?")) {
 
       stmt.setInt(1, no);
 
@@ -71,11 +68,10 @@ public class MemberDaoImpl implements com.eomcs.pms.dao.MemberDao {
 
   @Override
   public Member findByName(String name) throws Exception {
-    try (
-        PreparedStatement stmt = con.prepareStatement(
-            "select no, name, email, photo, tel, cdt"
-                + " from pms_member"
-                + " where name = ?")) {
+    try (PreparedStatement stmt = con.prepareStatement(
+        "select no, name, email, photo, tel, cdt"
+            + " from pms_member"
+            + " where name = ?")) {
 
       stmt.setString(1, name);
 
@@ -98,11 +94,10 @@ public class MemberDaoImpl implements com.eomcs.pms.dao.MemberDao {
 
   @Override
   public List<Member> findAll() throws Exception {
-    try (
-        PreparedStatement stmt = con.prepareStatement(
-            "select no, name, email, tel, cdt"
-                + " from pms_member"
-                + " order by no desc")) {
+    try (PreparedStatement stmt = con.prepareStatement(
+        "select no, name, email, tel, cdt"
+            + " from pms_member"
+            + " order by no desc")) {
 
       try (ResultSet rs = stmt.executeQuery()) {
         ArrayList<Member> list = new ArrayList<>();
@@ -122,15 +117,14 @@ public class MemberDaoImpl implements com.eomcs.pms.dao.MemberDao {
 
   @Override
   public int update(Member member) throws Exception {
-    try (
-        PreparedStatement stmt = con.prepareStatement(
-            "update pms_member set"
-                + " name = ?,"
-                + " email = ?,"
-                + " password = password(?),"
-                + " photo = ?,"
-                + " tel = ?"
-                + " where no = ?")) {
+    try (PreparedStatement stmt = con.prepareStatement(
+        "update pms_member set"
+            + " name = ?,"
+            + " email = ?,"
+            + " password = password(?),"
+            + " photo = ?,"
+            + " tel = ?"
+            + " where no = ?")) {
 
       stmt.setString(1, member.getName());
       stmt.setString(2, member.getEmail());
@@ -144,13 +138,12 @@ public class MemberDaoImpl implements com.eomcs.pms.dao.MemberDao {
 
   @Override
   public List<Member> findByProjectNo(int projectNo) throws Exception {
-    try (
-        PreparedStatement stmt = con.prepareStatement(
-            "select mp.member_no, m.name"
-                + " from pms_member_project mp inner join pms_member m"
-                + " on mp.member_no=m.no"
-                + " where mp.project_no=" + projectNo
-                + " order by m.name asc");
+    try (PreparedStatement stmt = con.prepareStatement(
+        "select mp.member_no, m.name"
+            + " from pms_member_project mp inner join pms_member m"
+            + " on mp.member_no=m.no"
+            + " where mp.project_no=" + projectNo
+            + " order by m.name asc");
         ResultSet rs = stmt.executeQuery()) {
 
       ArrayList<Member> members = new ArrayList<>();
@@ -166,11 +159,10 @@ public class MemberDaoImpl implements com.eomcs.pms.dao.MemberDao {
 
   @Override
   public Member findByEmailPassword(String email, String password) throws Exception {
-    try (
-        PreparedStatement stmt = con.prepareStatement(
-            "select no, name, email, photo, tel, cdt"
-                + " from pms_member"
-                + " where email = ? and password = password(?)")) {
+    try (PreparedStatement stmt = con.prepareStatement(
+        "select no, name, email, photo, tel, cdt"
+            + " from pms_member"
+            + " where email = ? and password = password(?)")) {
 
       stmt.setString(1, email);
       stmt.setString(2, password);

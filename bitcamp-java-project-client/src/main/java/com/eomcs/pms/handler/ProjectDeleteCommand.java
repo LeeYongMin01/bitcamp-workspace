@@ -12,7 +12,7 @@ public class ProjectDeleteCommand implements Command {
   }
 
   @Override
-  public void execute(Map<String, Object> context) {
+  public void execute(Map<String,Object> context) {
     System.out.println("[프로젝트 삭제]");
     int no = Prompt.inputInt("번호? ");
 
@@ -22,8 +22,7 @@ public class ProjectDeleteCommand implements Command {
       return;
     }
 
-      try {
-
+    try {
       if (projectDao.delete(no) == 0) {
         System.out.println("해당 번호의 프로젝트가 존재하지 않습니다.");
         return;

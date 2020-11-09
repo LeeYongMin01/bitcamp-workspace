@@ -10,11 +10,11 @@ public class MemberAddCommand implements Command {
   MemberDao memberDao;
 
   public MemberAddCommand(MemberDao memberDao) {
-   this.memberDao = memberDao;
+    this.memberDao = memberDao;
   }
 
   @Override
-  public void execute(Map<String, Object> context) {
+  public void execute(Map<String,Object> context) {
     System.out.println("[회원 등록]");
 
     Member member = new Member();

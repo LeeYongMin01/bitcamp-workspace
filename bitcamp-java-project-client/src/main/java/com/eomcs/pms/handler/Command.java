@@ -6,5 +6,5 @@ import java.util.Map;
 public interface Command {
 
   // => 커맨드 객체들 간에 데이터 교환을 위해 맵 객체를 파라미터로 넘긴다.
-  void execute(Map<String, Object> context);
+  void execute(Map<String,Object> context);
 }

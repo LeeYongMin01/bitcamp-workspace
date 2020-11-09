@@ -9,5 +9,4 @@ public interface ProjectDao {
   Project findByNo(int no) throws Exception;
   List<Project> findAll() throws Exception;
   int update(Project project) throws Exception;
-
 }

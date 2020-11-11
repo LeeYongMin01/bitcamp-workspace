@@ -1,23 +1,28 @@
 package com.eomcs.pms.handler;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import com.eomcs.pms.dao.MemberDao;
+import com.eomcs.pms.dao.ProjectDao;
+import com.eomcs.pms.domain.Member;
 import com.eomcs.pms.domain.Project;
 import com.eomcs.util.Prompt;
 
 public class ProjectAddCommand implements Command {
 
-  MemberListCommand memberListCommand;
+  ProjectDao projectDao;
+  MemberDao memberDao;
 
-  public ProjectAddCommand(MemberListCommand memberListCommand) {
-    this.memberListCommand = memberListCommand;
+  public ProjectAddCommand(ProjectDao projectDao, MemberDao memberDao) {
+    this.projectDao = projectDao;
+    this.memberDao = memberDao;
   }
 
   @Override
   public void execute() {
     System.out.println("[프로젝트 등록]");
 
+    try {
     Project project = new Project();
     project.setTitle(Prompt.inputString("프로젝트명? "));
     project.setContent(Prompt.inputString("내용? "));
@@ -25,54 +30,41 @@ public class ProjectAddCommand implements Command {
     project.setEndDate(Prompt.inputDate("종료일? "));
 
     while (true) {
-      String name = Prompt.inputString("만든이?(취소: 빈 문자열) ");
+      String name = Prompt.inputString("관리자?(취소: 빈 문자열) ");
 
       if (name.length() == 0) {
         System.out.println("프로젝트 등록을 취소합니다.");
         return;
-      } else if (memberListCommand.findByName(name) != null) {
-        project.setOwner(name);
+      } else {
+        Member member = memberDao.findByName(name);
+        if(member == null) {
+          System.out.println("등록된 회원이 아닙니다.");
+          continue;
+        }
+        project.setOwner(member);
         break;
       }
-
-      System.out.println("등록된 회원이 아닙니다.");
     }
 
-    StringBuilder members = new StringBuilder();
-
+    List<Member> members = new ArrayList<>();
     while (true) {
       String name = Prompt.inputString("팀원?(완료: 빈 문자열) ");
-
       if (name.length() == 0) {
         break;
-      } else if (memberListCommand.findByName(name) != null) {
-        if(members.length() > 0) {
-          members.append(",");
-        }
-        members.append(name);
       } else {
-        System.out.println("등록된 회원이 아닙니다.");
+        Member member = memberDao.findByName(name);
+        if(member == null) {
+          System.out.println("등록된 회원이 아닙니다.");
+          continue;
+        }
+        members.add(member);
       }
     }
 
-    project.setMembers(members.toString());
+    project.setMembers(members);
 
-    try (Connection con = DriverManager.getConnection(
-        "jdbc:mysql://localhost:3306/studydb?user=study&password=1111");
-        Statement stmt = con.createStatement()) {
-
-      String sql = String.format(
-          "insert into pms_project(title,content,sdt,edt,owner,members)"
-              + " values('%s','%s','%s','%s','%s','%s')",
-              project.getTitle(),
-              project.getContent(),
-              project.getStartDate(),
-              project.getEndDate(),
-              project.getOwner(),
-              project.getMembers());
-      stmt.executeUpdate(sql);
-
-      System.out.println("프로젝트를 등록하였습니다.");
+    projectDao.insert(project);
+    System.out.println("프로젝트를 등록하였습니다.");
 
     } catch (Exception e) {
       System.out.println("프로젝트 등록 중 오류 발생!");

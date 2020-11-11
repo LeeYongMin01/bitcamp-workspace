@@ -6,7 +6,7 @@ public class Board {
   private int no;
   private String title;
   private String content;
-  private String writer;
+  private Member writer;
   private Date registeredDate;
   private int viewCount;
 
@@ -28,10 +28,10 @@ public class Board {
   public void setContent(String content) {
     this.content = content;
   }
-  public String getWriter() {
+  public Member getWriter() {
     return writer;
   }
-  public void setWriter(String writer) {
+  public void setWriter(Member writer) {
     this.writer = writer;
   }
   public Date getRegisteredDate() {

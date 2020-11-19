@@ -24,35 +24,37 @@ public class ProjectAddCommand implements Command {
     System.out.println("[프로젝트 등록]");
 
     try {
-    Project project = new Project();
-    project.setTitle(Prompt.inputString("프로젝트명? "));
-    project.setContent(Prompt.inputString("내용? "));
-    project.setStartDate(Prompt.inputDate("시작일? "));
-    project.setEndDate(Prompt.inputDate("종료일? "));
+      Project project = new Project();
+      project.setTitle(Prompt.inputString("프로젝트명? "));
+      project.setContent(Prompt.inputString("내용? "));
+      project.setStartDate(Prompt.inputDate("시작일? "));
+      project.setEndDate(Prompt.inputDate("종료일? "));
 
+      Member loginUser = (Member) context.get("loginUser");
+      project.setOwner(loginUser);
 
-    Member loginUser = (Member) context.get("loginUser");
-    project.setOwner(loginUser);
-
-    List<Member> members = new ArrayList<>();
-    while (true) {
-      String name = Prompt.inputString("팀원?(완료: 빈 문자열) ");
-      if (name.length() == 0) {
-        break;
-      } else {
-        Member member = memberDao.findByName(name);
-        if(member == null) {
-          System.out.println("등록된 회원이 아닙니다.");
-          continue;
+      // 프로젝트에 참여할 회원 정보를 담는다.
+      List<Member> members = new ArrayList<>();
+      while (true) {
+        String name = Prompt.inputString("팀원?(완료: 빈 문자열) ");
+        if (name.length() == 0) {
+          break;
+        } else {
+          Member member = memberDao.findByName(name);
+          if (member == null) {
+            System.out.println("등록된 회원이 아닙니다.");
+            continue;
+          }
+          members.add(member);
         }
-        members.add(member);
       }
-    }
 
-    project.setMembers(members);
+      // 사용자로부터 입력 받은 멤버 정보를 프로젝트에 저장한다.
+      project.setMembers(members);
 
-    projectDao.insert(project);
-    System.out.println("프로젝트를 등록하였습니다.");
+      projectDao.insert(project);
+
+      System.out.println("프로젝트가 등록되었습니다!");
 
     } catch (Exception e) {
       System.out.println("프로젝트 등록 중 오류 발생!");

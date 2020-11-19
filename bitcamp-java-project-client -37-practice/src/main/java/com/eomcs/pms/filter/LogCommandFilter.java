@@ -22,6 +22,7 @@ public class LogCommandFilter implements CommandFilter {
     logOut.flush();
 
     next.doFilter(request);
+
   }
 
   @Override

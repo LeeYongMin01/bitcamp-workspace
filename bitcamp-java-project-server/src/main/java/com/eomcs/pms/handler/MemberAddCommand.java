@@ -16,22 +16,22 @@ public class MemberAddCommand implements Command {
 
   @Override
   public void execute(PrintWriter out, BufferedReader in) {
-    out.println("[회원 등록]");
-
     try {
-    Member member = new Member();
-    member.setNo(Prompt.inputInt("번호? ", out, in));
-    member.setName(Prompt.inputString("이름? ", out, in));
-    member.setEmail(Prompt.inputString("이메일? ", out, in));
-    member.setPassword(Prompt.inputString("암호? ", out, in));
-    member.setPhoto(Prompt.inputString("사진? ", out, in));
-    member.setTel(Prompt.inputString("전화? ", out, in));
-    member.setRegisteredDate(new java.sql.Date(System.currentTimeMillis()));
+      out.println("[회원 등록]");
 
-    memberList.add(member);
+      Member member = new Member();
+      member.setNo(Prompt.inputInt("번호? ", out, in));
+      member.setName(Prompt.inputString("이름? ", out, in));
+      member.setEmail(Prompt.inputString("이메일? ", out, in));
+      member.setPassword(Prompt.inputString("암호? ", out, in));
+      member.setPhoto(Prompt.inputString("사진? ", out, in));
+      member.setTel(Prompt.inputString("전화? ", out, in));
+      member.setRegisteredDate(new java.sql.Date(System.currentTimeMillis()));
 
-    } catch(Exception e) {
-      System.out.printf("작업 처리 중 오류 발생! -%s\n", e.getMessage());
+      memberList.add(member);
+
+    } catch (Exception e) {
+      out.printf("작업 처리 중 오류 발생! - %s\n", e.getMessage());
     }
   }
 }

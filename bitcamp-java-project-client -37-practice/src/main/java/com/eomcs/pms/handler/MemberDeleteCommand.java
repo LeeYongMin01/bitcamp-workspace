@@ -5,7 +5,6 @@ import com.eomcs.pms.dao.MemberDao;
 import com.eomcs.util.Prompt;
 
 public class MemberDeleteCommand implements Command {
-
   MemberDao memberDao;
 
   public MemberDeleteCommand(MemberDao memberDao) {
@@ -29,6 +28,7 @@ public class MemberDeleteCommand implements Command {
       } else {
         System.out.println("회원을 삭제하였습니다.");
       }
+
     } catch (Exception e) {
       System.out.println("회원 삭제 중 오류 발생!");
       e.printStackTrace();

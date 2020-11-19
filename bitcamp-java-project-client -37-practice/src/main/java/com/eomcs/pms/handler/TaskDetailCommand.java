@@ -17,18 +17,19 @@ public class TaskDetailCommand implements Command {
     System.out.println("[작업 상세보기]");
 
     try {
-    int no = Prompt.inputInt("번호? ");
+      int no = Prompt.inputInt("번호? ");
 
-    Task task = taskDao.findByNo(no);
-    if(task == null) {
-      System.out.println("해당 번호의 작업이 존재하지 않습니다.");
-      return;
-    }
-    System.out.printf("내용: %s\n", task.getContent());
-    System.out.printf("마감일: %s\n", task.getDeadline());
+      Task task = taskDao.findByNo(no);
+      if (task == null) {
+        System.out.println("해당 번호의 작업이 존재하지 않습니다.");
+        return;
+      }
 
-    String stateLabel = null;
-    switch (task.getStatus()) {
+      System.out.printf("내용: %s\n", task.getContent());
+      System.out.printf("마감일: %s\n", task.getDeadline());
+
+      String stateLabel = null;
+      switch (task.getStatus()) {
         case 1:
           stateLabel = "진행중";
           break;
@@ -36,7 +37,7 @@ public class TaskDetailCommand implements Command {
           stateLabel = "완료";
           break;
         default:
-            stateLabel = "신규";
+          stateLabel = "신규";
       }
       System.out.printf("상태: %s\n", stateLabel);
       System.out.printf("담당자: %s\n", task.getOwner().getName());

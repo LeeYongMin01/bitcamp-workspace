@@ -21,11 +21,12 @@ public class BoardAddCommand implements Command {
   public void execute(Map<String,Object> context) {
     System.out.println("[게시물 등록]");
 
-      try {
+    try {
       Board board = new Board();
       board.setTitle(Prompt.inputString("제목? "));
       board.setContent(Prompt.inputString("내용? "));
 
+      // 로그인 사용자 정보 가져오기
       Member loginUser = (Member) context.get("loginUser");
       board.setWriter(loginUser);
 

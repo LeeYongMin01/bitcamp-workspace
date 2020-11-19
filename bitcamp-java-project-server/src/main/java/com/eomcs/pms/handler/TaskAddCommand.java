@@ -18,32 +18,33 @@ public class TaskAddCommand implements Command {
 
   @Override
   public void execute(PrintWriter out, BufferedReader in) {
-    out.println("[작업 등록]");
-
     try {
-    Task task = new Task();
-    task.setNo(Prompt.inputInt("번호? ", out, in));
-    task.setContent(Prompt.inputString("내용? ", out, in));
-    task.setDeadline(Prompt.inputDate("마감일? ", out, in));
-    task.setStatus(Prompt.inputInt("상태?\n0: 신규\n1: 진행중\n2: 완료\n> ", out, in));
+      out.println("[작업 등록]");
 
-    while (true) {
-      String name = Prompt.inputString("담당자?(취소: 빈 문자열) ", out, in);
+      Task task = new Task();
+      task.setNo(Prompt.inputInt("번호? ", out, in));
+      task.setContent(Prompt.inputString("내용? ", out, in));
+      task.setDeadline(Prompt.inputDate("마감일? ", out, in));
+      task.setStatus(Prompt.inputInt("상태?\n0: 신규\n1: 진행중\n2: 완료\n> ", out, in));
 
-      if (name.length() == 0) {
-        out.println("작업 등록을 취소합니다.");
-        return;
-      } else if (memberListCommand.findByName(name) != null) {
-        task.setOwner(name);
-        break;
+      while (true) {
+        String name = Prompt.inputString("담당자?(취소: 빈 문자열) ", out, in);
+
+        if (name.length() == 0) {
+          out.println("작업 등록을 취소합니다.");
+          return;
+        } else if (memberListCommand.findByName(name) != null) {
+          task.setOwner(name);
+          break;
+        }
+
+        out.println("등록된 회원이 아닙니다.");
       }
 
-      out.println("등록된 회원이 아닙니다.");
-    }
+      taskList.add(task);
 
-    taskList.add(task);
-    } catch(Exception e) {
-      System.out.printf("작업 처리 중 오류 발생! -%s\n", e.getMessage());
+    } catch (Exception e) {
+      out.printf("작업 처리 중 오류 발생! - %s\n", e.getMessage());
     }
   }
 }

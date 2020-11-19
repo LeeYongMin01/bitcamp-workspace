@@ -3,6 +3,9 @@ package com.eomcs.pms.filter;
 import java.util.Map;
 import com.eomcs.pms.handler.Request;
 
+// 역할:
+// - CommandFilter 구현체를 관리하고 실행시킨다.
+// -
 public class CommandFilterManager {
   Chain firstChain;
   Chain lastChain;
@@ -21,6 +24,7 @@ public class CommandFilterManager {
     return firstChain;
   }
 
+  // 각각의 필터에게 준비하라고 요청한다.
   public void init(Map<String,Object> context) throws Exception {
     Chain chain = firstChain;
     while (chain != null) {
@@ -29,6 +33,7 @@ public class CommandFilterManager {
     }
   }
 
+  //각각의 필터에게 마무리하라고 요청한다.
   public void destroy() {
     Chain chain = firstChain;
     while (chain != null) {

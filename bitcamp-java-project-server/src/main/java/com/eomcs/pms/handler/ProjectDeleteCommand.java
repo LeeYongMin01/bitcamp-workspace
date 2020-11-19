@@ -17,25 +17,26 @@ public class ProjectDeleteCommand implements Command {
   @Override
   public void execute(PrintWriter out, BufferedReader in) {
     try {
-    out.println("[프로젝트 삭제]");
-    int no = Prompt.inputInt("번호? ", out, in);
-    int index = indexOf(no);
+      out.println("[프로젝트 삭제]");
+      int no = Prompt.inputInt("번호? ", out, in);
+      int index = indexOf(no);
 
-    if (index == -1) {
-      out.println("해당 번호의 프로젝트가 없습니다.");
-      return;
-    }
+      if (index == -1) {
+        out.println("해당 번호의 프로젝트가 없습니다.");
+        return;
+      }
 
-    String response = Prompt.inputString("정말 삭제하시겠습니까?(y/N) ", out, in);
-    if (!response.equalsIgnoreCase("y")) {
-      out.println("프로젝트 삭제를 취소하였습니다.");
-      return;
-    }
+      String response = Prompt.inputString("정말 삭제하시겠습니까?(y/N) ", out, in);
+      if (!response.equalsIgnoreCase("y")) {
+        out.println("프로젝트 삭제를 취소하였습니다.");
+        return;
+      }
 
-    projectList.remove(index);
-    out.println("프로젝트를 삭제하였습니다.");
-    } catch(Exception e) {
-      System.out.printf("작업 처리 중 오류 발생! -%s\n", e.getMessage());
+      projectList.remove(index);
+      out.println("프로젝트를 삭제하였습니다.");
+
+    } catch (Exception e) {
+      out.printf("작업 처리 중 오류 발생! - %s\n", e.getMessage());
     }
   }
 

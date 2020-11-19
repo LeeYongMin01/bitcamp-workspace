@@ -1,127 +1,64 @@
 package com.eomcs.pms.dao.mariadb;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.util.List;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import com.eomcs.pms.domain.Board;
-import com.eomcs.pms.domain.Member;
 
-public class BoardDaoImpl implements com.eomcs.pms.dao.BoardDao {
-  Connection con;
+// Mybatis 적용
+// => SqlSessionFactory를 자체적으로 생성하지 않고
+//    생성자를 통해 외부에서 주입 받는다.(Dependency Injection: DI)
+//
+public class BoardDaoImpl implements com.eomcs.pms.dao.BoardDao{
 
-  public BoardDaoImpl(Connection con) {
-    this.con = con;
+  SqlSessionFactory sqlSessionFactory;
+
+  public BoardDaoImpl(SqlSessionFactory sqlSessionFactory) {
+    this.sqlSessionFactory = sqlSessionFactory;
   }
 
-    @Override
-    public int insert(Board board) throws Exception {
-       try(PreparedStatement stmt = con.prepareStatement(
-            "insert into pms_board(title, content, writer) values(?, ?, ?)")) {
-
-        stmt.setString(1, board.getTitle());
-        stmt.setString(2, board.getContent());
-        stmt.setInt(3, board.getWriter().getNo());
-        return stmt.executeUpdate();
-      }
-    }
-
-    @Override
-    public int delete(int no) throws Exception {
-          try(PreparedStatement stmt = con.prepareStatement(
-              "delete from pms_board where no = ?")) {
-
-        stmt.setInt(1, no);
-        return stmt.executeUpdate();
-      }
-    }
-
-    @Override
-    public Board findByNo(int no) throws Exception {
-          try(PreparedStatement stmt = con.prepareStatement(
-            "select "
-                + " b.no, "
-                + " b.title, "
-                + " b.content,"
-                + " b.cdt, "
-                + " b.vw_cnt,"
-                + " m.no writer_no,"
-                + " m.name"
-                + " from pms_board b inner join pms_member m on b.writer = m.no"
-                + " where b.no = ?")) {
-
-        stmt.setInt(1, no);
-        try (ResultSet rs = stmt.executeQuery()) {
-          if (rs.next()) {
-            Board board = new Board();
-            board.setNo(rs.getInt("no"));
-            board.setTitle(rs.getString("title"));
-            board.setContent(rs.getString("content"));
-
-            Member member = new Member();
-            member.setNo(rs.getInt("writer_no"));
-            member.setName(rs.getString("name"));
-
-            board.setWriter(member);
-            board.setRegisteredDate(rs.getDate("cdt"));
-            board.setViewCount(rs.getInt("vw_cnt") + 1);
-
-            try(PreparedStatement stmt2 = con.prepareStatement(
-                "update pms_board set vw_cnt = vw_cnt + 1"
-                    + " where no = ?")) {
-
-              stmt2.setInt(1, no);
-              stmt2.executeUpdate();
-            }
-            return board;
-          } else {
-            return null;
-          }
-        }
-      }
-    }
-
-    @Override
-    public List<Board> findAll() throws Exception {
-          try(PreparedStatement stmt = con.prepareStatement(
-          "select b.no, b.title, b.cdt, b.vw_cnt, m.no writer_no, m.name"
-              + " from pms_board b inner join pms_member m on b.writer = m.no"
-              + " order by no desc")) {
-
-        try (ResultSet rs = stmt.executeQuery()) {
-
-          ArrayList<Board> list = new ArrayList<>();
-
-          while(rs.next()) {
-            Board board = new Board();
-            board.setNo(rs.getInt("no"));
-            board.setTitle(rs.getString("title"));
-
-            Member member = new Member();
-            member.setNo(rs.getInt("writer_no"));
-            member.setName(rs.getString("name"));
-            board.setWriter(member);
-
-            board.setRegisteredDate(rs.getDate("cdt"));
-            board.setViewCount(rs.getInt("vw_cnt"));
-
-            list.add(board);
-          }
-          return list;
-        }
-      }
-    }
-
-    @Override
-    public int update(Board board) throws Exception {
-          try(PreparedStatement stmt = con.prepareStatement(
-            "update pms_board set title = ?, content = ? where no = ?")) {
-
-        stmt.setString(1, board.getTitle());
-        stmt.setString(2, board.getContent());
-        stmt.setInt(3, board.getNo());
-        return stmt.executeUpdate();
-      }
+  @Override
+  public int insert(Board board) throws Exception {
+    try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+      return sqlSession.insert("BoardDao.insert", board);
     }
   }
+
+  @Override
+  public int delete(int no) throws Exception {
+    try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+      return sqlSession.delete("BoardDao.delete", no);
+    }
+  }
+
+  @Override
+  public Board findByNo(int no) throws Exception {
+    try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+      Board board = sqlSession.selectOne("BoardDao.findByNo", no);
+      sqlSession.update("BoardDao.updateViewCount", no);
+      return board;
+    }
+  }
+
+  @Override
+  public List<Board> findAll(String keyword) throws Exception {
+    try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+      return sqlSession.selectList("BoardDao.findAll", keyword);
+    }
+  }
+
+  @Override
+  public int update(Board board) throws Exception {
+    try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+      return sqlSession.update("BoardDao.update", board);
+    }
+  }
+}
+
+
+
+
+
+
+
+

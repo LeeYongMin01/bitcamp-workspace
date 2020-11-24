@@ -9,7 +9,6 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
 
-
 @WebServlet("/hello")
 public class HelloCommand implements Servlet {
 
@@ -19,9 +18,7 @@ public class HelloCommand implements Servlet {
 
     response.setContentType("text/plain;charset=UTF-8");
     PrintWriter out = response.getWriter();
-
     out.println("안녕하세요!");
-
   }
 
   @Override
@@ -47,4 +44,6 @@ public class HelloCommand implements Servlet {
     // TODO Auto-generated method stub
 
   }
+
+
 }

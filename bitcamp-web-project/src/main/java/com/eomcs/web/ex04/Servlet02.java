@@ -29,7 +29,7 @@ public class Servlet02 extends GenericServlet {
     // => 데이터를 읽을 때는 GET 요청과 POST 요청이 같다.
     // ServletRequest.getParameter("파라미터이름")
     // => POST 요청으로 보낸 데이터는 기본으로 영어(ISO-8859-1)라고 간주한다.
-    // 그래서 영어 코드를 자바에서 사용하는 UTF-8로 변환한다.
+    // 그래서 영어 코드를 자바에서 사용하는 UCS2(UTF-16)로 변환한다.
     // 예) "ABC가각"을 보낸다고 가정하자.
     // 실제 웹 브라우저가 "ABC가각" 문자열을 보낼 때 다음과 같이 UTF-8 코드를 보낸다.
     // 414243EAB080EAB081

@@ -16,6 +16,7 @@ public class Filter01 implements Filter {
   @Override
   public void init(FilterConfig filterConfig) throws ServletException {
     this.filterConfig = filterConfig;
+    System.out.println("ex06.Filter01.init()");
   }
 
   @Override
@@ -23,10 +24,42 @@ public class Filter01 implements Filter {
       throws IOException, ServletException {
 
     // 필터의 DD 설정으로 지정한 파라미터 값 가져오기
-    System.out.printf("ex06.Filter01 : encoding=%s\n", filterConfig.getInitParameter("encoding"));
+    System.out.printf("ex06.Filter01 : encoding=%s\n",
+        filterConfig.getInitParameter("encoding"));
+
+    System.out.printf("ex06.Filter01 : aaa=%s\n",
+        filterConfig.getInitParameter("aaa"));
 
     chain.doFilter(request, response);
   }
+
+  @Override
+  public void destroy() {
+    System.out.println("ex06.Filter01.detroy()");
+
+  }
 }
+
+// 필터 객체가 사용할 값을 외부 파일인 web.xml에 둘 수 있다.
+// wb.xml 예)
+//<filter>
+//  <filter-name>f1</filter-name>
+//  <filter-class>com.eomcs.web.ex06.Filter01</filter-class>
+//  <init-param>
+//      <param-name>encoding</param-name> <== 파라미터 이름과
+//      <param-value>UTF-8</param-value>  <== 파라미터 값을 설정할 수 있다.
+//    </init-param>
+//    <init-param>  <== 여러 개 설정하고 싶다면 이렇게 반복하라
+//      <param-name>aaa</param-name>
+//      <param-value>okok</param-value>
+//  </init-param>
+//</filter>
+//<filter-mapping>
+//  <filter-name>f1</filter-name>
+//  <url-pattern>/ex05/*</url-pattern>
+//</filter-mapping>
+
+// 필터에서 web.xml에 설정된 파라미터 값을 꺼내고 싶다면,
+// => FilterConfig.getinitParameter(파라미터명) 메서드를 사용하라
 
 

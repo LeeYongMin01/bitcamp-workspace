@@ -3,38 +3,27 @@ package com.eomcs.pms.web;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.List;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import com.eomcs.pms.domain.Board;
 import com.eomcs.pms.domain.Member;
-import com.eomcs.pms.service.BoardService;
+import com.eomcs.pms.service.MemberService;
 
-@WebServlet("/board/add")
-public class BoardAddServlet extends HttpServlet {
+@WebServlet("/project/form")
+public class ProjectAddFormServlet extends HttpServlet {
   private static final long serialVersionUID = 1L;
 
   @Override
-  protected void doPost(HttpServletRequest request, HttpServletResponse response)
+  protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
 
     ServletContext ctx = request.getServletContext();
-    BoardService boardService =
-        (BoardService) ctx.getAttribute("boardService");
-
-    // 클라이언트가 POST 요청할 때 보낸 데이터를 읽는다.
-//    request.setCharacterEncoding("UTF-8");
-
-    Board board = new Board();
-    board.setTitle(request.getParameter("title"));
-    board.setContent(request.getParameter("content"));
-
-    // 회원 정보가 들어있는 세션 객체를 얻는다.
-    HttpSession session = request.getSession();
+    MemberService memberService =
+        (MemberService) ctx.getAttribute("memberService");
 
     response.setContentType("text/html;charset=UTF-8");
     PrintWriter out = response.getWriter();
@@ -42,19 +31,30 @@ public class BoardAddServlet extends HttpServlet {
     out.println("<!DOCTYPE html>");
     out.println("<html>");
     out.println("<head>");
-    out.println("<meta http-equiv='Refresh' content='1;url=list'>");
-    out.println("<title>게시글등록</title></head>");
+    out.println("<title>프로젝트생성</title></head>");
     out.println("<body>");
     try {
-      out.println("<h1>게시물 등록</h1>");
+      out.println("<h1>프로젝트 생성</h1>");
 
-      Member loginUser = (Member) session.getAttribute("loginUser");
+      out.println("<form action='add' method='post'>");
+      out.println("프로젝트명: <input type='text' name='title'><br>");
+      out.println("내용: <textarea name='content' rows ='10' cols='60'></textarea><br>");
+      out.println("기간: <input type='date' name='startDate'> ~ ");
+      out.println("     <input type='date' name='endDate'><br>");
+      out.println(" 팀원: <br>");
+      out.println("<ul>");
 
-      board.setWriter(loginUser);
+      List<Member> members = memberService.list();
+      for(Member m : members) {
+        out.printf("  <li><input type='checkbox' name='members' value='%d'>%s</li>\n",
+            m.getNo(),
+            m.getName());
+      }
 
-      boardService.add(board);
+      out.println(" </ul><br>");
+      out.println("<button>생성</button>");
+      out.println("</form>");
 
-      out.println("<p>게시글을 등록하였습니다.</p>");
 
     } catch (Exception e) {
       out.println("<h2>작업 처리 중 오류 발생!</h2>");

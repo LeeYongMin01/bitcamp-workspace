@@ -105,6 +105,9 @@ public class DefaultProjectService implements ProjectService {
 
   @Override
   public int update(Project project) throws Exception {
+    // 프로젝트 정보를 변경한다.
+    int count = project
+
     return projectDao.update(project);
   }
 }

@@ -33,28 +33,28 @@ public class ProjectAddFormServlet extends HttpServlet {
     out.println("<head>");
     out.println("<title>프로젝트생성</title></head>");
     out.println("<body>");
+
     try {
       out.println("<h1>프로젝트 생성</h1>");
 
       out.println("<form action='add' method='post'>");
       out.println("프로젝트명: <input type='text' name='title'><br>");
-      out.println("내용: <textarea name='content' rows ='10' cols='60'></textarea><br>");
+      out.println("내용: <textarea name='content' rows='10' cols='60'></textarea><br>");
       out.println("기간: <input type='date' name='startDate'> ~ ");
-      out.println("     <input type='date' name='endDate'><br>");
-      out.println(" 팀원: <br>");
+      out.println("      <input type='date' name='endDate'><br>");
+      out.println("팀원: <br>");
       out.println("<ul>");
 
       List<Member> members = memberService.list();
-      for(Member m : members) {
+      for (Member m : members) {
         out.printf("  <li><input type='checkbox' name='members' value='%d'>%s</li>\n",
             m.getNo(),
             m.getName());
       }
 
-      out.println(" </ul><br>");
+      out.println("</ul><br>");
       out.println("<button>생성</button>");
       out.println("</form>");
-
 
     } catch (Exception e) {
       out.println("<h2>작업 처리 중 오류 발생!</h2>");

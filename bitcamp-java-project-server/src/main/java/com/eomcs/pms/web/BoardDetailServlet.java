@@ -43,7 +43,6 @@ public class BoardDetailServlet extends HttpServlet {
         out.println("해당 번호의 게시글이 없습니다.");
         return;
       }
-
       out.println("<form action='update' method='post'>");
       out.printf("번호: <input type='text' name='no' value='%d' readonly><br>\n",
           board.getNo());
@@ -61,11 +60,12 @@ public class BoardDetailServlet extends HttpServlet {
       out.println("</form>");
 
     } catch (Exception e) {
-      out.printf("<p>작업 처리 중 오류 발생! - %s</p>\n", e.getMessage());
+      out.println("<h2>작업 처리 중 오류 발생!</h2>");
+      out.printf("<pre>%s</pre>\n", e.getMessage());
 
       StringWriter errOut = new StringWriter();
       e.printStackTrace(new PrintWriter(errOut));
-
+      out.println("<h3>상세 오류 내용</h3>");
       out.printf("<pre>%s</pre>\n", errOut.toString());
     }
 

@@ -18,7 +18,6 @@ import com.eomcs.pms.service.ProjectService;
 
 @WebServlet("/project/update")
 public class ProjectUpdateServlet extends HttpServlet {
-
   private static final long serialVersionUID = 1L;
 
   @Override
@@ -38,28 +37,30 @@ public class ProjectUpdateServlet extends HttpServlet {
     out.println("<meta http-equiv='Refresh' content='1;url=list'>");
     out.println("<title>프로젝트변경</title></head>");
     out.println("<body>");
+
     try {
       out.println("<h1>프로젝트 변경</h1>");
 
       Project project = new Project();
+      project.setNo(Integer.parseInt(request.getParameter("no")));
       project.setTitle(request.getParameter("title"));
       project.setContent(request.getParameter("content"));
       project.setStartDate(Date.valueOf(request.getParameter("startDate")));
       project.setEndDate(Date.valueOf(request.getParameter("endDate")));
 
-      int no = request.getParameter("no");
-
+      // 프로젝트에 참여할 회원 정보를 담는다.
       List<Member> members = new ArrayList<>();
       String[] memberNoList = request.getParameterValues("members");
-      if(memberNoList != null) {
-        for(String memberNo : memberNoList) {
+      if (memberNoList != null) {
+        for (String memberNo : memberNoList) {
           members.add(new Member().setNo(Integer.parseInt(memberNo)));
         }
       }
       project.setMembers(members);
 
       if (projectService.update(project) == 0) {
-        out.println("해당 프로젝트가 존재하지 않습니다.");
+        out.println("<p>해당 프로젝트가 존재하지 않습니다.</p>");
+
       } else {
         out.println("<p>프로젝트를 변경하였습니다.</p>");
       }

@@ -19,7 +19,6 @@ import com.eomcs.pms.service.ProjectService;
 
 @WebServlet("/project/add")
 public class ProjectAddServlet extends HttpServlet {
-
   private static final long serialVersionUID = 1L;
 
   @Override
@@ -39,6 +38,7 @@ public class ProjectAddServlet extends HttpServlet {
     out.println("<meta http-equiv='Refresh' content='1;url=list'>");
     out.println("<title>프로젝트생성</title></head>");
     out.println("<body>");
+
     try {
       out.println("<h1>프로젝트 생성</h1>");
 
@@ -52,21 +52,21 @@ public class ProjectAddServlet extends HttpServlet {
       Member loginUser = (Member) session.getAttribute("loginUser");
       project.setOwner(loginUser);
 
-       // 프로젝트에 참여할 회원 정보를 담는다.
+      // 프로젝트에 참여할 회원 정보를 담는다.
       List<Member> members = new ArrayList<>();
       String[] memberNoList = request.getParameterValues("members");
-      if(memberNoList != null) {
-        for(String memberNo : memberNoList) {
-
-//          Member member = new Member();
-//          member.setNo(Integer.parseInt(memberNo));
-//          members.add(member);
+      if (memberNoList != null) {
+        for (String memberNo : memberNoList) {
+          //          Member member = new Member();
+          //          member.setNo(Integer.parseInt(memberNo));
+          //          members.add(member);
           members.add(new Member().setNo(Integer.parseInt(memberNo)));
         }
       }
       project.setMembers(members);
 
       projectService.add(project);
+
       out.println("<p>프로젝트가 등록되었습니다!</p>");
 
     } catch (Exception e) {

@@ -13,7 +13,6 @@ import com.eomcs.pms.service.BoardService;
 
 @WebServlet("/board/delete")
 public class BoardDeleteServlet extends HttpServlet {
-
   private static final long serialVersionUID = 1L;
 
   @Override
@@ -30,8 +29,8 @@ public class BoardDeleteServlet extends HttpServlet {
     out.println("<!DOCTYPE html>");
     out.println("<html>");
     out.println("<head>");
-    out.println("<meta http-equiv='Refresh' content='1;url=list'>");
-    out.println("title>게시글삭제</title></head>");
+    //out.println("<meta http-equiv='Refresh' content='1;url=list'>");
+    out.println("<title>게시글삭제</title></head>");
     out.println("<body>");
     try {
       out.println("<h1>게시물 삭제</h1>");
@@ -42,7 +41,6 @@ public class BoardDeleteServlet extends HttpServlet {
 
       } else {
         out.println("<p>게시글을 삭제하였습니다.</p>");
-
       }
 
     } catch (Exception e) {

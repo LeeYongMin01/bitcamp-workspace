@@ -12,13 +12,13 @@ import com.eomcs.pms.domain.Member;
 
 @WebServlet("/auth/logout")
 public class LogoutServlet extends HttpServlet {
+  private static final long serialVersionUID = 1L;
 
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
 
-
-    // 클라이언트 전용 보관소(http세션)를 준비한다.
+    // 클라이언트 전용 보관소(HttpSession)를 준비한다.
     HttpSession session = request.getSession();
 
     // 클라이언트로 데이터를 출력할 때 사용할 스트림 준비
@@ -37,12 +37,10 @@ public class LogoutServlet extends HttpServlet {
       out.println("<p>로그인 된 상태가 아닙니다!</p>");
 
     } else {
-
-
-    out.printf("<p>%s 님 안녕히 가세요!<p>\n", loginUser.getName());
-    session.invalidate(); // 로그아웃을 요청한 클라이언트의 세션을 무효화시킨다.
+      out.printf("<p>%s 님 안녕히 가세요!</p>\n", loginUser.getName());
+      session.invalidate(); // 로그아웃을 요청한 클라이언트의 세션을 무효화시킨다.
     }
-    out.println("</body></html>");
 
+    out.println("</body></html>");
   }
 }

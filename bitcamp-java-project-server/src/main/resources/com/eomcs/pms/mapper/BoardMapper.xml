@@ -14,7 +14,7 @@
     
     <association property="writer" javaType="member">
       <id column="writer_no"    property="no"/>
-      <result column="name"     property="name"/>
+      <result column="name_asd"     property="name"/>
     </association>
   </resultMap>
 
@@ -25,7 +25,7 @@
       b.cdt, 
       b.vw_cnt, 
       m.no writer_no, 
-      m.name
+      m.name 
     from 
       pms_board b 
       inner join pms_member m on b.writer=m.no

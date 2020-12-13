@@ -17,12 +17,12 @@ import javax.servlet.ServletResponse;
 //   <servlet-name>서블릿별명</servlet-name>
 //   <servlet-class>서블릿 클래스의 전체이름(패키지명 포함)</servlet-class>
 // </servlet>
-// 
+//
 // <servlet-mapping>
 //   <servlet-name>서블릿별명</servlet-name>
 //   <url-pattern>클라이언트에서 요청할 때 사용할 URL(/로 시작해야 한다.)</url-pattern>
 // </servlet-mapping>
-// 
+//
 // 서블릿 실행 방법
 // => http://서버주소:포트번호/웹애플리케이션이름/서블릿URL
 // 예) http://localhost:8080/eomcs-java-web/ex01/s01

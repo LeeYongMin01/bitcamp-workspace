@@ -9,6 +9,10 @@ repositories {
 }
 
 dependencies {
+
+    //Spring Context
+    implementation 'org.springframework:spring-context:5.3.2'
+    
     // Mybatis 퍼시스턴스 프레임워크
     implementation 'org.mybatis:mybatis:3.5.4'
   

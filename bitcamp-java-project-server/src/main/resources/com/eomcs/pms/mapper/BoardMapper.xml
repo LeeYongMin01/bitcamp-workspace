@@ -3,7 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
-<mapper namespace="BoardDao">
+<mapper namespace="com.eomcs.pms.dao.BoardDao">
   
   <resultMap type="board" id="BoardMap">
     <id column="no"           property="no"/>
@@ -14,18 +14,38 @@
     
     <association property="writer" javaType="member">
       <id column="writer_no"    property="no"/>
-      <result column="name_asd"     property="name"/>
+      <result column="name"     property="name"/>
     </association>
   </resultMap>
 
-  <select id="findAll" resultMap="BoardMap" parameterType="string">
+  <select id="findAll" resultMap="BoardMap" parameterType="map">
     select 
       b.no, 
       b.title, 
       b.cdt, 
       b.vw_cnt, 
       m.no writer_no, 
-      m.name 
+      m.name
+    from 
+      pms_board b 
+      inner join pms_member m on b.writer=m.no
+    <if test="keyword != null">
+    <bind name="pattern" value="'%' + keyword + '%'" />
+    where 
+      b.title like #{pattern}
+      or b.content like #{pattern}
+      or m.name like #{pattern} 
+    </if>
+    order by 
+      b.no desc
+    <if test="startRowNo != null and pageSize != null">
+    limit #{startRowNo}, #{pageSize}
+    </if>
+  </select>
+  
+  <select id="count" resultType="int" parameterType="string">
+    select 
+      count(*)
     from 
       pms_board b 
       inner join pms_member m on b.writer=m.no
@@ -36,8 +56,6 @@
       or b.content like #{pattern}
       or m.name like #{pattern} 
     </if>
-    order by 
-      b.no desc
   </select>
   
   <insert id="insert" parameterType="board">
@@ -45,9 +63,7 @@
     values(#{title}, #{content}, #{writer.no})
   </insert>
   
-  <select id="findByNo" 
-    parameterType="int" 
-    resultMap="BoardMap">
+  <select id="findByNo" parameterType="int" resultMap="BoardMap">
     select
 	    b.no,
 	    b.title,
